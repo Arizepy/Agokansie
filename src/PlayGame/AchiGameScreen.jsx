@@ -60,8 +60,9 @@ import victoryMine from '../assets/sound/robot_wins/victoryMine.m4a'
 import boardReady from '../assets/sound/welcome/boardReady.m4a'
 import enjoyableGame from '../assets/sound/welcome/enjoyGame.m4a'
 import goodLuck from '../assets/sound/welcome/goodLuck.m4a'
-import shallWeBegin from '../assets/sound/welcome/shallWeBegin.m4a'
+import shallWeBegin from '../assets/sound/achi/introOne.m4a'
 import strategistWin from '../assets/sound/welcome/strategistWin.m4a'
+
 
 import { API } from './API'
 
@@ -136,10 +137,6 @@ function AchiGame(){
 
     const useRobotWinsResponses = () => {
         const RobotWinsResponses = [
-            {
-                text: "Well played. Let's play again",
-                voice: playedWell
-            },
             {
                 text: "Good game. That was enjoyable",
                 voice: enjoyableGame

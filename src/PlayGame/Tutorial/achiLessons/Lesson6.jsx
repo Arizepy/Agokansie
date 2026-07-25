@@ -29,6 +29,7 @@ const thinking = "..."
 const PlayWoodTap = () => { 
     if (woodTap.current) { 
         woodTap.current.currentTime = 0; 
+        woodTap.current.volume = 0.1;
         woodTap.current.play()
     }
 }
@@ -36,6 +37,7 @@ const PlayWoodTap = () => {
 const playHighlight = () => { 
     if (highlight.current) {
         highlight.current.currentTime = 0; 
+        highlight.current.volume = 0.1;
         highlight.current.play()
     }
 }
@@ -43,6 +45,7 @@ const playHighlight = () => {
 const playVictory = () => {
     if(victory.current) { 
         victory.current.currentTime = 0; 
+        victory.current.volume = 0.1;
         victory.current.play()
     }
  }

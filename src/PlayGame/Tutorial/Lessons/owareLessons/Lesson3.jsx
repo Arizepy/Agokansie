@@ -28,7 +28,7 @@ const hightlight  = useRef(new Audio(Hightlight))
 const playPlacePiece = () => {
     if (pieceSound.current){
         pieceSound.current.currentTime = 0; 
-        pieceSound.current.volume = 0.01;
+        pieceSound.current.volume = 0.1;
         pieceSound.current.play()
         
     }
@@ -44,7 +44,7 @@ const playWoodTap = () => {
 const playHighLight = () => {
     if (hightlight.current) {
         hightlight.current.currentTime = 0;
-         hightlight.current.volume = 0.01;
+         hightlight.current.volume = 0.1;
         hightlight.current.play();
        
     }

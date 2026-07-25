@@ -42,7 +42,7 @@ const playPlacePiece = () => {
 const playHighLight = () => {
     if (hightlight.current) {
         hightlight.current.currentTime = 0;
-        Highlight.current.volume = 0.1
+        highlight.current.volume = 0.1
         hightlight.current.play();
     }
 }

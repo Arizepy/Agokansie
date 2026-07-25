@@ -27,6 +27,7 @@ const thinking = "..."
 const playWoodTap = () => { 
     if (woodTap.current) { 
         woodTap.current.currentTime = 0; 
+        woodTap.current.volume = 0.1;
         woodTap.current.play()
     }
 }

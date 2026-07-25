@@ -25,6 +25,7 @@ const thinking = "..."
 const playWoodTap = () => {
     if (woodTap.current) { 
         woodTap.current.currentTime = 0; 
+        woodTap.current.volume = 0.1;
         woodTap.current.play()
     }
 }
@@ -32,7 +33,8 @@ const playWoodTap = () => {
 
 const playVictory = () => { 
     if (victory.current) { 
-        victory.current.currentTime = 0; 
+        victory.current.currentTime = 0;
+        victory.current.volume = 0.1; 
         victory.current.play();
     }
 }

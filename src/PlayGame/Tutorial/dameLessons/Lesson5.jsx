@@ -93,6 +93,7 @@ const goBack = () => {
 const goForward = () => {
     navigate(1)
     woodTap.current.currentTime = 0
+    woodTap.current.volume =0.1
     woodTap.current.play()
 }
 

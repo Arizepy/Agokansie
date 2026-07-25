@@ -32,6 +32,7 @@ const voiceRef = useRef(new Audio());
 const playWoodTap = () => { 
     if (woodTap.current) { 
         woodTap.current.currentTime = 0; 
+        woodTap.current.volume = 0.1;
         woodTap.current.play();
     }
 }
@@ -39,12 +40,14 @@ const playWoodTap = () => {
 const playError = () => { 
     if (error.current) { 
         error.current.currentTime = 0; 
+        error.current.volume = 0.1;
         error.current.play();
     }
 }
 const playHint = () => {
     if (hint.current) { 
         hint.current.currentTime =  0; 
+        hint.current.volume = 0.1;
         hint.current.play();
     }
 }
