@@ -36,6 +36,7 @@ const voiceRef = useRef(new Audio());
 const playPlacePiece = () => {
     if (pieceSound.current){
         pieceSound.current.currentTime = 0; 
+        pieceSound.current.volume = 0.1
         pieceSound.current.play()
     }
 }
@@ -43,6 +44,7 @@ const playPlacePiece = () => {
 const playHighLight = () => {
     if (hightlight.current) {
         hightlight.current.currentTime = 0;
+        hightlight.current.volume = 0.1
         hightlight.current.play();
     }
 }
@@ -50,6 +52,7 @@ const playHighLight = () => {
 const playError = () => {
     if (error.current) {
         error.current.currentTime = 0; 
+        error.current.volume = 0.1
         error.current.play()
     }
 }
@@ -57,12 +60,14 @@ const playError = () => {
 const playVictory = () => {
     if (victory.current){
         victory.current.currentTime = 0;
+        victory.current.volume = 0.1
         victory.current.play()
     }
 }
 const playWoodTap = () => {
     if (woodTap.current){
         woodTap.current.currentTime = 0;
+        woodTap.current.volume = 0.1
         woodTap.current.play()
     }
 }
@@ -143,6 +148,7 @@ const [currentStep, setCurrentStep] = useState(0)
     }, [currentStep])
 
      const nextLessonNavigation = () => {
+        playWoodTap()
         if (nextLesson){
             navigate('/selectionScreen')
         } else {
@@ -153,6 +159,7 @@ const [currentStep, setCurrentStep] = useState(0)
 
     
     const PreviousLesson = () => {
+        playWoodTap()
         if(currentStep === 0){
             setPreviousLessonVariable(true)
         } else {
@@ -161,12 +168,14 @@ const [currentStep, setCurrentStep] = useState(0)
     }
 
     const PreviousLessonNavigation = () => {
+        playWoodTap()
         if (previousLessonVariable){
             navigate('/owarelesson5')
         } else {
             previousStep()
         }
     }
+    
 
     useEffect (() =>{
         const audio = voiceRef.current; 

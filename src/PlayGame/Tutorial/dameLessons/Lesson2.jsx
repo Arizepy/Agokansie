@@ -19,6 +19,13 @@ const woodTap = useRef(new Audio(woodTapSound))
 const thinking = "..."
 const voiceRef = useRef(new Audio());
 
+const playWoodTap = () => { 
+    if (woodTap.current) { 
+        woodTap.current.currentTime = 0; 
+        woodTap.current.volume = 0.1;
+        woodTap.current.play()
+    }
+}
 
 const steps = [{
         step: '1',
@@ -88,6 +95,7 @@ const getBoardState = () => {
     }
 
     const nextLessonNavigation = () => {
+        playWoodTap()
         if (nextLesson){
             navigate('/damelesson3')
         } else {
@@ -105,6 +113,7 @@ const getBoardState = () => {
     }
 
     const PreviousLessonNavigation = () => {
+        playWoodTap()
         if (previousLessonVariable){
             navigate('/damelesson1')
         } else {

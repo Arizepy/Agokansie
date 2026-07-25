@@ -10,6 +10,12 @@ import blockedAudio from '../../../assets/sound/blocked.mp3'
 import VictorySound from '../../../assets/sound/victory.mp3'
 import { gsap } from 'gsap'
 
+//Lesson sound
+import moveOne from '../../../assets/sound/achi/movesOne.m4a'
+import moveTwo from '../../../assets/sound/achi/movesTwo.m4a'
+import moveThree from '../../../assets/sound/achi/movesThree.m4a'
+import moveFour from '../../../assets/sound/achi/movesFour.m4a'
+
 
 function AchiLesson4(){
 
@@ -17,28 +23,38 @@ const woodTap = useRef(new Audio(woodTapSound))
 const error = useRef(new Audio(ErrorSound))
 const blocked = useRef(new Audio(blockedAudio))
 const victory = useRef(new Audio(VictorySound))
+const voiceRef = useRef(new Audio());
+
 const thinking = "..."
+
+const playWoodTap = () => { 
+    if (woodTap.current) { 
+        woodTap.current.currentTime = 0; 
+        woodTap.currrent.volume = 0.1;
+        woodTap.current.play()
+    }
+}
 
 
 const steps = [{
     step: '1',
     text: "Once all pieces have been placed, players continue taking turns moving one piece at a time.",
-    voice: 'Foolish boy Siaw'
+    voice: moveOne
 
 },{
     step: '2',
     text: "A piece may only move along the connecting lines to an adjacent empty point. Pieces cannot jump over other pieces or move into occupied spaces.",
-    voice: 'Foolish boy Siaw'
+    voice: moveTwo
 
 },{
     step: '3',
     text: "A piece that is completely surrounded by other pieces and has no adjacent empty spaces is blocked and cannot be moved until a space becomes available.",
-    voice: 'Foolish boy Siaw'
+    voice: moveThree
 
 },{
     step: '4',
     text: "Players continue moving their pieces until one player successfully forms a straight line of three pieces.",
-    voice: 'Foolish boy Siaw'
+    voice: moveFour
 
 } ]
 
@@ -83,6 +99,7 @@ const LessonState = () => {
 }
 
 const nextLessonNavigation = () => {
+    playWoodTap()
     if (nextLesson){
         navigate('/achilesson5')
     } else {
@@ -100,6 +117,7 @@ const PreviousLesson = () => {
 }
 
 const PreviousLessonNavigation = () => {
+        playWoodTap()
     if (previousLessonVariable){
         navigate('/achilesson3')
     } else {
@@ -112,6 +130,24 @@ useEffect(() => {
     LessonState()
     PreviousLesson()
 }, [currentStep])
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
+
 
 
 //Board state

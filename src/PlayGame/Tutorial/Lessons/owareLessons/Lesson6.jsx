@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import PageWrapper from '../../../../WelcomeScreen/PageWrapper'
 import bg from '../../../../assets/background-collage.png'
 import thinking_image  from '../../../../assets/black_man_thinking.webp'
-import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
+import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House, LayoutList} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
 import placePiece from '../../../../assets/sound/piecePlacement.mp3'
 import Hightlight from '../../../../assets/sound/blocked.mp3'
@@ -33,6 +33,7 @@ const voiceRef = useRef(new Audio());
 const playPlacePiece = () => {
     if (pieceSound.current){
         pieceSound.current.currentTime = 0; 
+        pieceSound.current.volume = 0.1;
         pieceSound.current.play()
     }
 }
@@ -40,6 +41,7 @@ const playPlacePiece = () => {
 const playHighLight = () => {
     if (hightlight.current) {
         hightlight.current.currentTime = 0;
+        hightlight.current.volume = 0.1;
         hightlight.current.play();
     }
 }
@@ -47,6 +49,7 @@ const playHighLight = () => {
 const playError = () => {
     if (error.current) {
         error.current.currentTime = 0; 
+        error.current.volume = 0.1
         error.current.play()
     }
 }
@@ -54,12 +57,14 @@ const playError = () => {
 const playVictory = () => {
     if (victory.current){
         victory.current.currentTime = 0;
+        victory.current.volume = 0.1
         victory.current.play()
     }
 }
 const playWoodTap = () => {
     if (woodTap.current){
         woodTap.current.currentTime = 0;
+        woodTap.current.volume = 0.1
         woodTap.current.play()
     }
 }
@@ -137,6 +142,7 @@ PreviousLesson()
 }, [currentStep])
 
 const nextLessonNavigation = () => {
+    playWoodTap
 if (nextLesson){
     navigate('/owarelesson7')
 } 
@@ -154,12 +160,30 @@ if(currentStep === 0){
 }
 
 const PreviousLessonNavigation = () => {
+    playWoodTap()
 if (previousLessonVariable){
     navigate('/owarelesson5')
 } else {
     previousStep()
 }
 }
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 useEffect (() =>{
     const audio = voiceRef.current; 

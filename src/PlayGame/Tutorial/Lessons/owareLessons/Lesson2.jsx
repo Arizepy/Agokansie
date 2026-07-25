@@ -41,6 +41,13 @@ const steps = [{
 
     } ]
 
+    const playWoodTap = () => {
+    if (woodTap.current){
+        woodTap.current.currentTime = 0;
+        woodTap.current.volume = 0.1
+        woodTap.current.play()
+    }
+}
 
 //Navigation
 const navigate = useNavigate()
@@ -81,6 +88,7 @@ const goForward = () => {
     }
 
     const nextLessonNavigation = () => {
+        playWoodTap
         if (nextLesson){
             navigate('/owarelesson3')
         } else {
@@ -98,6 +106,7 @@ const goForward = () => {
     }
 
     const PreviousLessonNavigation = () => {
+        playWoodTap()
         if (previousLessonVariable){
             navigate('/owarelesson1')
         } else {

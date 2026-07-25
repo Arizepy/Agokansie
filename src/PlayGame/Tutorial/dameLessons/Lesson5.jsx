@@ -93,6 +93,7 @@ const goBack = () => {
 const goForward = () => {
     navigate(1)
     woodTap.current.currentTime = 0
+    woodTap.current.volume =0.1
     woodTap.current.play()
 }
 
@@ -125,6 +126,7 @@ const LessonState = () => {
 }
 
 const nextLessonNavigation = () => {
+    playWoodTap()
     if (nextLesson){
         navigate('/damelesson6')
     } else {
@@ -142,6 +144,7 @@ const PreviousLesson = () => {
 }
 
 const PreviousLessonNavigation = () => {
+    playWoodTap()
     if (previousLessonVariable){
         navigate('/damelesson4')
     } else {

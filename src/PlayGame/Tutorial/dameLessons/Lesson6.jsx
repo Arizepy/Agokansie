@@ -8,8 +8,15 @@ import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
 import Victory from '../../../assets/sound/victory.mp3'
-
 import { gsap } from 'gsap'
+
+//Lesson sound 
+
+import tipsOne from '../../../assets/sound/dame/tipsOne.m4a'
+import tipsTwo from '../../../assets/sound/dame/tipsTwo.m4a'
+import tipsThree from '../../../assets/sound/dame/tipsThreee.m4a'
+import tipsFour from '../../../assets/sound/dame/tipsFOur.m4a'
+
 
 export default  function DameLesson6(){
 
@@ -24,6 +31,7 @@ const thinking = "..."
 const playWoodTap = () => { 
     if (woodTap.current) { 
         woodTap.current.currentTime = 0; 
+        woodTap.current.volume = 0.1
         woodTap.current.play();
     }
 }
@@ -31,12 +39,15 @@ const playWoodTap = () => {
 const playError = () => { 
     if (error.current) { 
         error.current.currentTime = 0; 
+        error.current.volume = 0.1
         error.current.play();
+
     }
 }
 const playHint = () => {
     if (hint.current) { 
         hint.current.currentTime =  0; 
+        hint.current.volume = 0.1
         hint.current.play();
     }
 }
@@ -44,6 +55,7 @@ const playHint = () => {
 const playVictory = ()  => {
     if (victory.current) { 
         victory.current.currentTime = 0; 
+        victory.current.volume = 0.1
         victory.current.play()
     }
 }
@@ -116,6 +128,7 @@ const LessonState = () => {
 }
 
 const nextLessonNavigation = () => {
+    playWoodTap()
     if (nextLesson){
         navigate('/damelesson7')
     } else {
@@ -133,6 +146,7 @@ const PreviousLesson = () => {
 }
 
 const PreviousLessonNavigation = () => {
+    playWoodTap()
     if (previousLessonVariable){
         navigate('/damelesson5')
     } else {
