@@ -10,6 +10,14 @@ import placePiece from '../../../../assets/sound/piecePlacement.mp3'
 import Hightlight from '../../../../assets/sound/blocked.mp3'
 import errorSound from '../../../../assets/sound/error.mp3'
 import victorySound from '../../../../assets/sound/victory.mp3'
+
+//Lesson Sounds 
+import soundOne from '../../../../assets/sound/oware/captureOne.m4a'
+import soundTwo from '../../../../assets/sound/oware/captureTwo.m4a'
+import soundThree from '../../../../assets/sound/oware/captureThree.m4a'
+import soundFour from '../../../../assets/sound/oware/captureFour.m4a'
+
+
 export default function OwareLesson5(){
     
 
@@ -19,6 +27,10 @@ const pieceSound = useRef(new Audio(placePiece))
 const hightlight  = useRef(new Audio(Hightlight))
 const error = useRef (new Audio(errorSound))
 const victory = useRef(new Audio(victorySound))
+
+const voiceRef = useRef(new Audio());
+
+
 const playPlacePiece = () => {
     if (pieceSound.current){
         pieceSound.current.currentTime = 0; 
@@ -57,22 +69,22 @@ const playWoodTap = () => {
 const steps = [{
         step: '1',
         text: "You can capture seeds when your final seed lands in your opponent's territory and creates exactly four seeds in that pit.",
-        voice: 'Foolish boy Siaw'
+        voice: soundOne
 
     },{
         step: '2',
         text: "Captured seeds should immediately be removed from the board and placed into your collection container.",
-        voice: 'Foolish boy Siaw'
+        voice: soundTwo
 
     },{
         step: '3',
         text: "Capturing is only allowed in your own territory. Seeds that form four in your opponent's territory cannot be captured.",
-        voice: 'Foolish boy Siaw'
+        voice: soundThree
 
     },{
         step: '4',
         text: "Keep careful track of every captured seed, as the player with the most captured seeds at the end of the game wins.",
-        voice: 'Foolish boy Siaw'
+        voice: soundFour
 
     } ]
 
@@ -149,6 +161,24 @@ const PreviousLessonNavigation = () => {
         previousStep()
     }
 }
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
+
 
 
 // BOARD STATE

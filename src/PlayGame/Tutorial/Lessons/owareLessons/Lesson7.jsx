@@ -12,6 +12,15 @@ import errorSound from '../../../../assets/sound/error.mp3'
 import victorySound from '../../../../assets/sound/victory.mp3'
 
 
+//Lesson Sound
+import tipsOne from '../../../../assets/sound/oware/tipsOne.m4a'
+import tipsTwo from '../../../../assets/sound/oware/tipsTwo.m4a'
+import tipsThree from '../../../../assets/sound/oware/tipsThree.m4a'
+import tipsFour from '../../../../assets/sound/oware/tipsFour.m4a'
+import endSound from '../../../../assets/sound/oware/endSound.m4a'
+
+
+
 function OwareLesson7(){
     
 
@@ -21,6 +30,9 @@ const pieceSound = useRef(new Audio(placePiece))
 const hightlight  = useRef(new Audio(Hightlight))
 const error = useRef (new Audio(errorSound))
 const victory = useRef(new Audio(victorySound))
+
+const voiceRef = useRef(new Audio());
+
 const playPlacePiece = () => {
     if (pieceSound.current){
         pieceSound.current.currentTime = 0; 
@@ -58,26 +70,26 @@ const playWoodTap = () => {
 const steps = [{
         step: '1',
         text: "Always try to predict where your final seed will land before making a move. Thinking several steps ahead greatly improves your chances of creating captures and avoiding mistakes.",
-        voice: 'Foolish boy Siaw'
-
+        voice: tipsOne
     },{
         step: '2',
         text: "Maintaining two or three seeds in several of your pits gives you more options for future turns and increases your chances of creating chain moves.",
-        voice: 'Foolish boy Siaw'
+        voice: tipsTwo
 
     },{
         step: '3',
         text: "Make good use of pits containing five or more seeds. These allow you to spread seeds farther around the board and gain better control of the game.",
-        voice: 'Foolish boy Siaw'
+        voice: tipsThree
 
     },{
         step: '4',
         text: "Watch your opponent's possible moves carefully. Anticipating their strategy helps you avoid giving away easy captures while creating opportunities for yourself.",
-        voice: 'Foolish boy Siaw'
+        voice: tipsFour
 
     }, {
         step: '5',
         text: "Congratulations! You've completed the Oware tutorial. You now understand the basic rules, how to sow seeds, capture your opponent's seeds, and think strategically before each move. Keep practising to sharpen your skills, challenge stronger opponents, and enjoy one of Africa's greatest traditional board games. Good luck, and have fun playing!",
+        voice : endSound
     } ]
 
 //Navigate
@@ -155,6 +167,23 @@ const [currentStep, setCurrentStep] = useState(0)
             previousStep()
         }
     }
+
+    useEffect (() =>{
+        const audio = voiceRef.current; 
+    
+        audio.src = steps[currentStep].voice; 
+        audio.currentTime = 0; 
+        
+        audio.play().catch(() =>{
+    
+        })
+    
+        return () =>{
+            audio.pause(); 
+            audio.currentTime = 0;
+        }
+    
+    }, [currentStep])
 // BOARD STATE
 
 

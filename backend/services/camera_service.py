@@ -9,11 +9,17 @@ class CameraService:
         self.camera_index = camera_index
 
         self.cap = cv2.VideoCapture(camera_index)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,1280)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
         if not self.cap.isOpened():
             raise Exception(
                 f"Could not open camera at index {camera_index}"
             )
+
+    # =====================================
+    # CAPTURE FRAME
+    # =====================================
     def capture_frame(self):
 
         ret, frame = self.cap.read()
@@ -23,7 +29,7 @@ class CameraService:
 
         return frame
 
-    # ====================================c=
+    # =====================================
     # SCAN BOARD
     # =====================================
     def scan_board(self, game):

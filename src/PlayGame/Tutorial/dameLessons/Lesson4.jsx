@@ -8,8 +8,13 @@ import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
 import Victory from '../../../assets/sound/victory.mp3'
-
 import { gsap } from 'gsap'
+
+//Lesson sound 
+import captureOne from '../../../assets/sound/dame/captureOne.m4a'
+import captureTwo from '../../../assets/sound/dame/captureTwo.m4a'
+import captureThree from '../../../assets/sound/dame/captureThree.m4a'
+import captureFour from '../../../assets/sound/dame/captureFour.m4a'
 
 
 export default function DameLesson4(){
@@ -18,6 +23,8 @@ const woodTap = useRef(new Audio(woodTapSound))
 const error = useRef(new  Audio(ErrorSound))
 const hint = useRef (new Audio(showHint))
 const victory = useRef(new Audio(Victory))
+const voiceRef = useRef(new Audio());
+
 const thinking = "..."
 
 const playWoodTap = () => { 
@@ -50,22 +57,22 @@ const playVictory = ()  => {
  const steps = [{
         step: '1',
         text: "A capture is made by jumping diagonally over an adjacent opponent's piece into the empty square immediately behind it. The jumped piece is then removed from the board.",
-        voice: 'Foolish boy Siaw'
+        voice: captureOne
 
     },{
         step: '2',
         text: "Capturing is compulsory in Dame. Whenever a capture is available, you must make it before any other move.",
-        voice: 'Foolish boy Siaw'
+        voice: captureTwo
 
     },{
         step: '3',
         text: "Regular pieces may move backwards only when performing a legal capture. Backward movement is not allowed during ordinary moves.",
-        voice: 'Foolish boy Siaw'
+        voice: captureThree
 
     },{
         step: '4',
         text: "If, after making a capture, another capture is immediately available, you must continue jumping in the same turn until no further captures can be made.",
-        voice: 'Foolish boy Siaw'
+        voice: captureFour
 
     } ]
 
@@ -140,7 +147,22 @@ useEffect(() => {
     PreviousLesson()
 }, [currentStep])
 
+useEffect (() =>{
+    const audio = voiceRef.current; 
 
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 //Board state
 const getBoardState = () => {
     console.log('i have played')    

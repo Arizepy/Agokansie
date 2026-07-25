@@ -11,6 +11,13 @@ import errorSound from '../../../../assets/sound/error.mp3'
 import victorySound from '../../../../assets/sound/victory.mp3'
 import woodTapSound from '../../../../assets/sound/woodTap.mp3'
 
+//Lesson sounds
+import soundOne from '../../../../assets/sound/oware/gameEndOne.m4a'
+import soundTwo from '../../../../assets/sound/oware/gameEndTwo.m4a'
+import soundThree from '../../../../assets/sound/oware/gameEndThree.m4a'
+import soundFour from '../../../../assets/sound/oware/gameEndFour.m4a'
+
+
 function OwareLesson6(){
     
 
@@ -20,6 +27,9 @@ const pieceSound = useRef(new Audio(placePiece))
 const hightlight  = useRef(new Audio(Hightlight))
 const error = useRef (new Audio(errorSound))
 const victory = useRef(new Audio(victorySound))
+
+const voiceRef = useRef(new Audio());
+
 const playPlacePiece = () => {
     if (pieceSound.current){
         pieceSound.current.currentTime = 0; 
@@ -58,22 +68,22 @@ const playWoodTap = () => {
 const steps = [{
         step: '1',
         text: "A round comes to an end when only four seeds remain on the board. If one player has already captured four more seeds than the other, that player receives the remaining four seeds.",
-        voice: 'Foolish boy Siaw'
+        voice: soundOne
  
     },{
         step: '2',
         text: "After all captured and remaining seeds have been counted, the player with the highest total number of seeds is declared the winner.",
-        voice: 'Foolish boy Siaw'
+        voice: soundTwo
 
     },{
         step: '3',
         text: "If both players finish with the same number of seeds, the game is considered a draw.",
-        voice: 'Foolish boy Siaw'
+        voice: soundThree
 
     },{
         step: '4',
         text: "Once the winner has been announced, return all forty-eight seeds to the board to prepare for the next game.",
-        voice: 'Foolish boy Siaw'
+        voice: soundFour
 
     } ]
 
@@ -150,6 +160,23 @@ if (previousLessonVariable){
     previousStep()
 }
 }
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 // BOARD STATE
 

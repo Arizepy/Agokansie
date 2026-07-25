@@ -8,8 +8,14 @@ import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
 import Victory from '../../../assets/sound/victory.mp3'
-
 import { gsap } from 'gsap'
+
+//Lesson sounds
+
+import promoteOne from '../../../assets/sound/dame/promotionOne.m4a'
+import promoteTwo from '../../../assets/sound/dame/promotionTwo.m4a'
+import promoteThree from '../../../assets/sound/dame/promotionThree.m4a'
+import promoteFour from '../../../assets/sound/dame/promotionFour.m4a'
 
 
 function DameLesson5(){
@@ -18,6 +24,8 @@ const woodTap = useRef(new Audio(woodTapSound))
 const error = useRef(new  Audio(ErrorSound))
 const hint = useRef (new Audio(showHint))
 const victory = useRef(new Audio(Victory))
+const voiceRef = useRef(new Audio());
+
 const thinking = "..."
 
 const playWoodTap = () => { 
@@ -51,23 +59,24 @@ const playVictory = ()  => {
 
 const steps = [{
     step: '1',
+
     text: "When one of your pieces reaches your opponent's back row, it is promoted to a King.",
-    voice: 'Foolish boy Siaw'
+    voice: promoteOne
 
 },{
     step: '2',
     text: "A King can move diagonally both forwards and backwards, giving it much greater mobility than a regular piece.",
-    voice: 'Foolish boy Siaw'
+    voice: promoteTwo
 
 },{
     step: '3',
     text: "Kings can capture opponent pieces in any diagonal direction, making them powerful pieces during the game.",
-    voice: 'Foolish boy Siaw'
+    voice: promoteThree
 
 },{
     step: '4',
     text: "Protect your Kings whenever possible, as they can control large areas of the board and greatly improve your chances of winning.",
-    voice: 'Foolish boy Siaw'
+    voice: promoteFour
 
 } ]
 
@@ -146,6 +155,22 @@ useEffect(() => {
     PreviousLesson()
 }, [currentStep])
 
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 // Board State 
 const getBoardState = () => {

@@ -18,6 +18,8 @@ const woodTap = useRef(new Audio(woodTapSound))
 const error = useRef(new  Audio(ErrorSound))
 const hint = useRef (new Audio(showHint))
 const victory = useRef(new Audio(Victory))
+const voiceRef = useRef(new Audio());
+
 
 const playWoodTap = () => { 
     if (woodTap.current) { 
@@ -145,7 +147,22 @@ const getBoardState = () => {
         PreviousLesson()
     }, [currentStep])
 
+useEffect (() =>{
+    const audio = voiceRef.current; 
 
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 //Board state
 
     const createBoard = () => {

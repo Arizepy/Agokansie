@@ -5,7 +5,7 @@ import thinking_image  from '../assets/black_man_thinking.webp'
 import bg from '../assets/background-collage.png'
 import woodTapSound from '../assets/sound/woodTap.mp3'
 import { useNavigate } from "react-router-dom"; 
-import { Settings,Volume2, Gamepad2, Monitor, RotateCcw, Check, Music, AudioLines, CornerDownLeft, CircleX, ArrowRight, ArrowLeft, House, ChartNoAxesCombined, Trophy } from 'lucide-react'
+import { Settings,Volume2, Gamepad2, Monitor, RotateCcw, Check, Music, AudioLines, CornerDownLeft, CircleX, ArrowRight, ArrowLeft, House, ChartNoAxesCombined, Trophy, Users } from 'lucide-react'
 
 import player from '../assets/player.jpg'
 import robot from '../assets/robot.jpg'
@@ -218,6 +218,8 @@ function DameGame(){
     const [status, setStatus] = useState('')
 
     const [response, setResponse] = useState('')
+
+    const[getReward, setGetReward] = useState(true)
 
 
 
@@ -508,9 +510,11 @@ function DameGame(){
     const [gameOver, setGameOver] = useState(true)
     const [playerScore, setPlayerScore] = useState()
     const [robotScore, setRobotScore] = useState()
-    const [playerWins, setPlayerWins] = useState(false)
+    const [playerWins, setPlayerWins] = useState(true)
     const [agokansieWins, setAgokansieWins] = useState(false)
     const [winner, setWinner] = useState('')
+    const [victor, setVictor] = useState('')
+
 
      
     useEffect(() => {
@@ -567,6 +571,19 @@ function DameGame(){
         }
 }, [playerScore, robotScore])
 
+ useEffect (()=>{
+    if (gameOver && victor === 'player' ){ 
+        setWinner('You win!'); 
+        setPlayerWins(true)
+        usePlayerWinsResponses();
+    }
+    else if (gameOver && victor === 'robot') {
+        setWinner('Agokansie wins!'); 
+        setAgokansieWins(true)
+        useRobotWinsResponses();
+    }
+}, [victor])
+
     const useInvalidMoveResponses = () => {
         const invalidMovesResponses = [
             {
@@ -601,10 +618,41 @@ function DameGame(){
         woodTap.current.play()
     }
 
+    
+
 const createBoard = () => Array(32).fill(0);
 let playableIndex = 0;
 
 const [board, setBoard] = useState(createBoard);
+
+
+const claimReward = async () => {
+            if (victor !== 'robot' ) return
+            
+            try {
+                const response = await fetch(`${API}/api/game/dispense`,
+                    {
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': "application/json",
+                    },
+                    }
+                )
+                
+            }
+
+            catch (error) { 
+                console.log(error.message)
+            }
+        
+
+        }
+
+ 
+    const handleReward = () => {
+        claimReward()
+        setGetReward(false)
+    }
     
     return(
         <PageWrapper >
@@ -626,8 +674,7 @@ const [board, setBoard] = useState(createBoard);
 
  {/* game over screen */}
 
-            {
-                gameOver ? 
+            { gameOver ?
                 
                 <div className='absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-220 h-150 z-100'>
                     <div className='flex flex-col justify-center items-center rounded-3xl border-4 border-[#b98b56] bg-[#efe0c2] shadow-2xl overflow-hidden bg-dark p-5 gap-10'>
@@ -672,10 +719,11 @@ const [board, setBoard] = useState(createBoard);
                                 <p>PLAY AGAIN </p>  
                             </button>
 
-                             <button className='flex items-center justify-center p-3 gap-2 border-1 rounded-lg cursor-pointer font-bold text-xl animate-float text-midGold hover:scale-95 duration-300  '>
+                             { playerWins && getReward ?  <button className='flex items-center justify-center p-3 gap-2 border-1 rounded-lg cursor-pointer font-bold text-xl animate-float text-midGold hover:scale-95 duration-300' onClick={handleReward} >
                                 <Trophy />
                                 <p>CLAIM YOUR REWARD</p>
-                            </button>
+                            </button>  : null
+                            }
 
                              <button className='flex items-center justify-center p-3 gap-2 border-1 rounded-lg cursor-pointer font-bold text-xl text-midGold hover:scale-95 duration-300' onClick={BackToHome}>
                                 <House />
@@ -687,9 +735,7 @@ const [board, setBoard] = useState(createBoard);
                 </div> 
                 
                 
-                
-                : null
-
+              : null
             }
 
             
@@ -947,7 +993,7 @@ const [board, setBoard] = useState(createBoard);
                                     : "bg-purple-600"  
                             }`}
                         />
-                    )}
+                    )}  
                 </div>
             );
         })}

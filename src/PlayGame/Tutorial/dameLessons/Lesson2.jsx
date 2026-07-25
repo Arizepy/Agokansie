@@ -6,31 +6,39 @@ import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lu
 import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 
+//LessonSound
+import rulesOne from '../../../assets/sound/dame/rulesOne.m4a'
+import rulesTwo from '../../../assets/sound/dame/rulesTwo.m4a'
+import rulesThree from '../../../assets/sound/dame/rulesThree.m4a'
+import rulesFour from '../../../assets/sound/dame/rulesFour.m4a'
+
 
 export default function DameLesson2(){
 
 const woodTap = useRef(new Audio(woodTapSound))
 const thinking = "..."
+const voiceRef = useRef(new Audio());
+
 
 const steps = [{
         step: '1',
         text: "Handle every game piece with care when placing, moving, or capturing. Keeping the pieces properly positioned helps the robot accurately recognise the board state.",
-        voice: 'Foolish boy Siaw'
+        voice: rulesOne
 
     },{
         step: '2',
         text: "Never place your hands inside the robot's working area while it is moving a piece. Wait until the robot has completed its turn before interacting with the board.",
-        voice: 'Foolish boy Siaw'
+        voice: rulesTwo
 
     },{
         step: '3',
         text: "Remove captured pieces only after the robot has finished its capture sequence, unless instructed otherwise by the game interface. Place captured pieces neatly in the designated container.",
-        voice: 'Foolish boy Siaw'
+        voice: rulesThree
 
     },{
         step: '4',
         text: "Play one move at a time and avoid touching other pieces during a turn. Allow the robot to complete every action before making your next move to ensure fair and accurate gameplay.",
-        voice: 'Foolish boy Siaw'
+        voice: rulesFour
 
     } ]
 
@@ -105,10 +113,27 @@ const getBoardState = () => {
     }
     
 
-    useEffect(() => {
-        LessonState()
-        PreviousLesson()
-    }, [currentStep])
+useEffect(() => {
+    LessonState()
+    PreviousLesson()
+}, [currentStep])
+
+useEffect (() =>{
+const audio = voiceRef.current; 
+
+audio.src = steps[currentStep].voice; 
+audio.currentTime = 0; 
+
+audio.play().catch(() =>{
+
+})
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 
 //Board state 

@@ -6,11 +6,16 @@ import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lu
 import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 
+//Lesson soundx
+import introOne from '../../../assets/sound/dame/introOne.m4a'
+import introTwo from '../../../assets/sound/dame/introTwo.m4a'
+import introThree from '../../../assets/sound/dame/introThree.m4a'
 
 function DameLesson1(){
 
 const woodTap = useRef(new Audio(woodTapSound))
 const thinking = "..."
+const voiceRef = useRef(new Audio());
 
 
 
@@ -24,17 +29,17 @@ const playWoodTap = () => {
 const steps = [{
     step: '1',
     text: "Welcome! I'm Agokansie, your Dame companion. Whether this is your very first game or you're looking to sharpen your skills, I'll guide you every step of the way. By the end of this tutorial, you'll understand the rules, learn how to move pieces, capture opponenet pieces and useful strstegies to win the game . Let's begin!",
-    voice: 'Foolish boy Siaw'
+    voice: introOne
 
 },{
     step: '2',
     text: "Dame is a traditional Ghanaian strategy game, commonly known as Checkers. It is widely played across Ghana because it develops patience, tactical thinking, and careful planning.",
-    voice: 'Foolish boy Siaw'
+    voice: introTwo
 
 },{
     step: '3',
     text: "The objective of the game is to capture all of your opponent's pieces or leave them with no legal moves, making you the winner.",
-    voice: 'Foolish boy Siaw'
+    voice: introThree
 
 } ]
 
@@ -97,6 +102,23 @@ const getBoardState = () => {
         }
     }
 
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 //Boardz
     const createBoard = () => {

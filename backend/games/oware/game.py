@@ -45,18 +45,114 @@ class OwareGame(BaseGame):
         return board
     
 
+#     def find_user_move(self, scanned_board):
+
+#         current_board = self.engine.board
+#         current_player = self.engine.current_player
+
+#         # Determine which pits belong to the current player
+#         # if current_player == 1:
+#         #     pits = range(0, 6)
+#         # else:
+#         #     pits = range(6, 12)
+#         pits = range(0, 6)
+#         matches = []
+        
+#         tests=[]
+
+#         for pit in pits:
+#             # print(pits,"here are the pits ")
+#             # Skip empty pits
+#             if current_board[pit] == 0:
+#                 continue
+
+#             # Make a deep copy of the engine
+#             test_engine = copy.deepcopy(self.engine)
+#             test_engine.current_player=1
+
+#             try:
+#                 # Simulate the move
+#                 test_engine.play_move(pit)
+#                 # tests.append(test_engine.board)
+#                 print(test_engine.board)
+#                 for p in range(len(test_engine.board)):
+#                 # Check if the result matches what the camera saw
+#                 if test_engine.board == scanned_board:
+#                     matches.append(pit)
+
+#             except Exception as e:
+#                 print(f"Simulation failed for pit {pit}: {e}")
+#         # print(tests)
+#         # No matching move
+#         if len(matches) == 0:
+#             return None
+
+#         # Exactly one matching move
+#         if len(matches) == 1:
+#             return matches[0]
+
+#         # Multiple matches (should be rare)
+#         raise ValueError(f"Multiple possible moves found: {matches}")   
+# # human move 
+
+
+
+    # def find_user_move(self, scanned_board):
+
+    #     current_board = self.engine.board
+
+    #     pits = range(0, 6)
+
+    #     best_pit = None
+    #     best_score = -1
+
+    #     for pit in pits:
+
+    #         if current_board[pit] == 0:
+    #             continue
+
+    #         test_engine = copy.deepcopy(self.engine)
+    #         test_engine.current_player = 1
+
+    #         try:
+    #             test_engine.play_move(pit)
+
+    #             score = 0
+    #             comparisons = 0
+
+    #             # Compare only pits that changed AND are visible (<5)
+    #             for i in range(12):
+
+    #                 if current_board[i] != test_engine.board[i]:
+
+    #                     if test_engine.board[i] < 5:
+
+    #                         comparisons += 1
+
+    #                         if scanned_board[i] == test_engine.board[i]:
+    #                             score += 1
+
+    #             print(f"\nPit {pit}")
+    #             print("Simulated :", test_engine.board)
+    #             print("Scanned   :", scanned_board)
+    #             print(f"Score: {score}/{comparisons}")
+
+    #             if score > best_score:
+    #                 best_score = score
+    #                 best_pit = pit
+
+    #         except Exception as e:
+    #             print(f"Simulation failed for pit {pit}: {e}")
+    #     return best_pit
+    
+    
     def find_user_move(self, scanned_board):
 
         current_board = self.engine.board
-        current_player = self.engine.current_player
+        pits = range(0, 6)      # Human pits
 
-        # Determine which pits belong to the current player
-        # if current_player == 1:
-        #     pits = range(0, 6)
-        # else:
-        #     pits = range(6, 12)
-        pits = range(0, 6)
-        matches = []
+        best_pit = None
+        least_errors = float("inf")
 
         for pit in pits:
 
@@ -64,31 +160,58 @@ class OwareGame(BaseGame):
             if current_board[pit] == 0:
                 continue
 
-            # Make a deep copy of the engine
+            # Simulate the move
             test_engine = copy.deepcopy(self.engine)
+            test_engine.current_player = 1
 
             try:
-                # Simulate the move
-                test_engine.play_move(pit)
+                result = test_engine.play_move(pit)
 
-                # Check if the result matches what the camera saw
-                if test_engine.board == scanned_board:
-                    matches.append(pit)
+                # Invalid move
+                if result is None:
+                    continue
+
+                errors = 0
+                comparisons = 0
+
+                # Compare only pits that changed
+                for i in range(12):
+
+                    if current_board[i] != test_engine.board[i]:
+
+                        # Ignore pits that the vision cannot distinguish
+                        if test_engine.board[i] >= 3:
+                            continue
+
+                        comparisons += 1
+
+                        if scanned_board[i] != test_engine.board[i]:
+                            errors += 1
+
+                print(f"\nTesting pit {pit}")
+                print("Simulated :", test_engine.board)
+                print("Scanned   :", scanned_board)
+                print(f"Comparisons: {comparisons}")
+                print(f"Errors     : {errors}")
+
+                # Keep the move with the fewest errors
+                if errors < least_errors:
+                    least_errors = errors
+                    best_pit = pit
 
             except Exception as e:
                 print(f"Simulation failed for pit {pit}: {e}")
 
-        # No matching move
-        if len(matches) == 0:
+        # Reject if no simulation was successful
+        if best_pit is None:
             return None
 
-        # Exactly one matching move
-        if len(matches) == 1:
-            return matches[0]
+        # Reject if the best match is still too different
+        # Adjust this threshold depending on your vision accuracy.
+        if least_errors > 1:
+            return None
 
-        # Multiple matches (should be rare)
-        raise ValueError(f"Multiple possible moves found: {matches}")   
-# human move 
+        return best_pit
     def play_human_move(self, pit):
 
         if not self.engine.is_valid_move(pit):
@@ -143,7 +266,7 @@ class OwareGame(BaseGame):
 
         return self.engine.is_valid_move(pit)
 
-    def apply_move(self, move):
+    def apply_move(self, move,player):
 
         pit = move["pit"]
 
@@ -247,19 +370,19 @@ class OwareGame(BaseGame):
 
         pit_map = {
 
-            6: (15, 20),
-            7: (70, 20),
-            8: (120, 20),
-            9: (180, 20),
-            10: (230, 20),
-            11: (290, 20),
+            6: (12, 68),
+            7: (65, 68),
+            8: (118, 68),
+            9: (170, 68), 
+            10: (223, 68),
+            11: (273, 68),
 
-            0: (290, 80),
-            1: (230, 80),
-            2: (180, 80),
-            3: (120, 80),
-            4: (70, 80),
-            5: (15, 80)
+            0: (273, 135),
+            1: (223, 135),
+            2: (170, 135),
+            3: (118, 135),
+            4: (65, 135),
+            5: (12, 135)
         }
 
         return pit_map[pit]

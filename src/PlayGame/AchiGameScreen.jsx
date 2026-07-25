@@ -218,6 +218,8 @@ function AchiGame(){
 
     const [response, setResponse] = useState('')
 
+    const [getReward, setGetReward] = useState(true)
+
 
    const woodTap = useRef(new Audio(woodTapSound))
 
@@ -296,7 +298,7 @@ function AchiGame(){
         }
 
         const claimReward = async () => {
-            if (victor !== 'robot') return
+            if (victor !== 'robot' ) return
             
             try {
                 const response = await fetch(`${API}/api/game/dispense`,
@@ -635,6 +637,11 @@ const LINES = [
         console.log(proverb)
     }, [])
     
+    const handleReward = () => {
+        claimReward()
+        setGetReward(false)
+    }
+    
     return(
         <PageWrapper >
             <div className={`absolute inset-0 bg-gradient-to-r from-[#3b1f0f]/80 via-[#8b5a2b]/70 to-[#d4a017]/80 -z-1 min-h-screen flex flex-col items-center justify-center ${status === 'error' ? 'border-4 border-red-500' : ''} ${gameOver ? 'bg-black': ''}`}>
@@ -655,8 +662,8 @@ const LINES = [
 
  {/* game over screen */}
 
-            {
-                gameOver ? 
+            { gameOver ?
+                
                 
                 <div className='absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-220 h-150 z-100'>
                     <div className='flex flex-col justify-center items-center rounded-3xl border-4 border-[#b98b56] bg-[#efe0c2] shadow-2xl overflow-hidden bg-dark p-5 gap-10'>
@@ -700,10 +707,11 @@ const LINES = [
                                 <RotateCcw/>
                                 <p>PLAY AGAIN </p>  
                             </button>
-                            { agokansieWins ? <button className='flex items-center justify-center p-3 gap-2 border-1 rounded-lg cursor-pointer font-bold text-xl animate-float text-midGold hover:scale-95 duration-300' onClick={claimReward}>
+
+                            { agokansieWins && getReward ?  <button className='flex items-center justify-center p-3 gap-2 border-1 rounded-lg cursor-pointer font-bold text-xl animate-float text-midGold hover:scale-95 duration-300' onClick={handleReward} >
                                 <Trophy />
                                 <p>CLAIM YOUR REWARD</p>
-                            </button> : null
+                            </button>  : null
                             }
                             
                              <button className='flex items-center justify-center p-3 gap-2 border-1 rounded-lg cursor-pointer font-bold text-xl text-midGold hover:scale-95 duration-300' onClick={BackToHome}>
@@ -717,8 +725,7 @@ const LINES = [
                 
                 
                 
-                : null
-
+            : null
             }  
 
             {displayScreen ?

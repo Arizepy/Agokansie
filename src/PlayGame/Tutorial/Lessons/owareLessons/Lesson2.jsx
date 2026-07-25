@@ -6,31 +6,38 @@ import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lu
 import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../../assets/sound/woodTap.mp3'
 
+//Lesson sounds 
+import soundOne from '../../../../assets/sound/oware/rulesOne.m4a'
+import soundTwo from '../../../../assets/sound/oware/rulesTwo.m4a'
+import soundThree from '../../../../assets/sound/oware/rulesThree.m4a'
+import soundFour from '../../../../assets/sound/oware/rulesFour.m4a'
 
 export default function OwareLesson2(){
 
 const woodTap = useRef(new Audio(woodTapSound))
+const voiceRef = useRef(new Audio());
+
 const thinking = "..."
 
 const steps = [{
         step: '1',
         text: "Handle all the beads with care throughout the game. Rough handling may cause the pieces to scatter or become misplaced, making it difficult for the game to continue smoothly.",
-        voice: 'Foolish boy Siaw'
+        voice: soundOne
 
     },{
         step: '2',
         text: "For your safety, never place your hand or any object in the robot's path while it is moving across the board. Wait until the robot has completely finished its move before interacting with the game.",
-        voice: 'Foolish boy Siaw'
+        voice: soundTwo
 
     },{
         step: '3',
         text: "Whenever you capture beads, place them neatly into your designated container pod. Keeping captured beads separate makes it easier to determine the winner at the end of the game.",
-        voice: 'Foolish boy Siaw'
+        voice: soundThree
 
     },{
         step: '4',
         text: "Always wait for the robot or your opponent to complete their turn before touching the board. Never move pieces early or interfere with another player's turn, as this would be cheating and could affect the outcome of the game.",
-        voice: 'Foolish boy Siaw'
+        voice: soundThree
 
     } ]
 
@@ -104,7 +111,22 @@ const goForward = () => {
         PreviousLesson()
     }, [currentStep])
 
+useEffect (() =>{
+    const audio = voiceRef.current; 
 
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 
 //Board state

@@ -9,6 +9,13 @@ import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
 import { gsap } from 'gsap'
 
+//Lesson sound 
+import moveOne from '../../../assets/sound/dame/moveOne.m4a'
+import moveTwo from '../../../assets/sound/dame/moveTwo.m4a'
+import moveThree from '../../../assets/sound/dame/moveThree.m4a'
+import moveFour from '../../../assets/sound/dame/moveFour.m4a'
+
+
 
 
 function DameLesson3(){
@@ -16,7 +23,11 @@ function DameLesson3(){
 const woodTap = useRef(new Audio(woodTapSound))
 const error = useRef(new  Audio(ErrorSound))
 const hint = useRef (new Audio(showHint))
+
 const thinking = "..."
+
+const voiceRef = useRef(new Audio());
+
 
 const playWoodTap = () => { 
     if (woodTap.current) { 
@@ -40,22 +51,22 @@ const playHint = () => {
   const steps = [{
         step: '1',
         text: "During a normal turn, a piece may move one square diagonally forward into an empty space. Regular pieces cannot move backwards unless making a capture.",
-        voice: 'Foolish boy Siaw'
+        voice: moveOne
 
     },{
         step: '2',
         text: "A piece may move diagonally either to the left or to the right, provided the destination square is empty.",
-        voice: 'Foolish boy Siaw'
+        voice: moveTwo
 
     },{
         step: '3',
         text: "When a piece reaches the edge of the board, its movement becomes limited because it can only move toward available spaces inside the board.",
-        voice: 'Foolish boy Siaw'
+        voice: moveThree
 
     },{
         step: '4',
         text: "If all possible diagonal spaces are occupied by other pieces, whether they belong to you or your opponent, that piece becomes blocked and cannot move.",
-        voice: 'Foolish boy Siaw'
+        voice: moveFour
 
     } ]
 
@@ -123,12 +134,30 @@ const PreviousLessonNavigation = () => {
     }
 }
 
+
+
   useEffect(() => {
         LessonState()
         PreviousLesson()
     }, [currentStep])
 
+    
+useEffect (() =>{
+    const audio = voiceRef.current; 
 
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 
 // Board State 

@@ -9,6 +9,12 @@ import woodTapSound from '../../../../assets/sound/woodTap.mp3'
 import placePiece from '../../../../assets/sound/piecePlacement.mp3'
 import Hightlight from '../../../../assets/sound/blocked.mp3'
 
+//Tutorial sounds 
+import stepOneAudio from '../../../../assets/sound/oware/sowingOne.m4a'
+import stepTwoAudio from '../../../../assets/sound/oware/sowingTwo.m4a'
+import stepThreeAudio from '../../../../assets/sound/oware/sowingThree.m4a'
+import stepFourAudio from '../../../../assets/sound/oware/sowingFour.m4a'
+
 
 export default function OwareLesson4(){
     
@@ -31,25 +37,29 @@ const playHighLight = () => {
     }
 }
 
+const voiceRef = useRef(new Audio());
+
+
+
 const steps = [{
         step: '1',
         text: "Players take turns making moves. On your turn, choose one pit from your own territory and pick up every seed from that pit.",
-        voice: 'Foolish boy Siaw'
+        voice: stepOneAudio
 
     },{
         step: '2',
         text: "Moving in a counter-clockwise direction, place one seed into each pit until you have distributed all the seeds in your hand.",
-        voice: 'Foolish boy Siaw'
+        voice: stepTwoAudio
 
     },{
         step: '3',
         text: "If your final seed lands in a pit that already contains other seeds, pick up all the seeds from that pit and continue sowing. This process may repeat several times during the same turn.",
-        voice: 'Foolish boy Siaw'
+        voice: stepThreeAudio
 
     },{
         step: '4',
         text: "If your final seed lands in an empty pit, your turn ends immediately and play passes to your opponent. If your opponent has no seeds remaining, you must make a move that gives them seeds so the game can continue.",
-        voice: 'Foolish boy Siaw'
+        voice: stepFourAudio
 
     } ]
 
@@ -128,6 +138,23 @@ const PreviousLessonNavigation = () => {
 const getBoardState = () => {
     console.log('i have played')    
 }
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 
 // BOARD STATE

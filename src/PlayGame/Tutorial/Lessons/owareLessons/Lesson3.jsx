@@ -10,6 +10,12 @@ import placePiece from '../../../../assets/sound/piecePlacement.mp3'
 import Hightlight from '../../../../assets/sound/blocked.mp3'
 
 
+//Tutorial voice
+import lessonOne from '../../../../assets/sound/oware/boardLessonOne.m4a'
+import lessonTwo from '../../../../assets/sound/oware/boardLessonTwo.m4a'
+import lessonThree from '../../../../assets/sound/oware/boardLessonThree.m4a'
+import lessonFour from '../../../../assets/sound/oware/boardLessonFour.m4a'
+
 
 
 function OwareLesson3(){
@@ -35,26 +41,27 @@ const playHighLight = () => {
 
 const thinking = "..."
 
+const voiceRef = useRef(new Audio());
 
     const steps = [{
         step: '1',
         text: "The Oware board consists of twelve pits arranged in two rows of six. Each row belongs to one player and represents that player's territory.",
-        voice: 'Foolish boy Siaw'
+        voice: lessonOne
 
     },{
         step: '2',
         text: "The game begins with a total of forty-eight seeds distributed evenly across the board. Every pit starts with exactly four seeds, ensuring both players begin with an equal advantage.",
-        voice: 'Foolish boy Siaw'
+        voice: lessonTwo
 
     },{
         step: '3',
         text: "Before the game starts, take a moment to confirm that every pit contains four seeds and that the board is correctly arranged.",
-        voice: 'Foolish boy Siaw'
+        voice: lessonThree
 
     },{
         step: '4',
         text: "Decide who will play first before the game begins, as players will alternate turns until the game ends.  ",
-        voice: 'Foolish boy Siaw'
+        voice: lessonFour
 
     } ]
 
@@ -132,6 +139,23 @@ const PreviousLessonNavigation = () => {
         previousStep()
     }
 }
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 
 // BOARD STATE

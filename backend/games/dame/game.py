@@ -1,396 +1,219 @@
-# from games.base_game import BaseGame
-# import random
-
-# from games.dame.engine import (
-#     minimax,
-#     RED,
-#     WHITE
-# )
-
-# from games.dame.vision import DameVision
-
-
-# class DameGame(BaseGame):
-
-#     def __init__(self):
-
-#         super().__init__("dame")
-
-#         # =========================
-#         # CORE COMPONENTS
-#         # =========================
-#         self.vision = DameVision()
-#         self.board_state = None
-#         self.search_depth = 4
-
-#     # =====================================================
-#     # REQUIRED: VISION
-#     # =====================================================
-#     def scan_board(self, frame):
-
-#         board = self.vision.scan_board(frame)
-
-#         self.board_state = board
-
-#         return board
-
-#     # =====================================================
-#     # REQUIRED: AI
-#     # =====================================================
-#     def get_best_move(self, board_state):
-
-#         score, new_engine = minimax(
-#             self._wrap_board(board_state),
-#             self.search_depth,
-#             True
-#         )
-
-#         move = self._find_move(board_state, new_engine.board)
-
-#         return {
-#             "from": move["from"],
-#             "to": move["to"]
-#         }
-
-#     # =====================================================
-#     # REQUIRED: APPLY MOVE
-#     # =====================================================
-#     def apply_move(self, move):
-
-#         if not self.validate_move(move):
-#             raise ValueError("Invalid move")
-
-#         start = move["from"]
-#         end = move["to"]
-
-#         piece = self.board_state[start[0]][start[1]]
-
-#         # move piece
-#         self.board_state[start[0]][start[1]] = 0
-#         self.board_state[end[0]][end[1]] = piece
-
-#         return True
-
-#     # =====================================================
-#     # REQUIRED: GAME OVER CHECK
-#     # =====================================================
-#     def is_game_over(self):
-
-#         if self.board_state is None:
-#             return False
-
-#         red_exists = any(RED in row for row in self.board_state)
-#         white_exists = any(WHITE in row for row in self.board_state)
-
-#         return not (red_exists and white_exists)
-
-#     # =====================================================
-#     # REQUIRED: VALIDATION
-#     # =====================================================
-#     def validate_move(self, move):
-
-#         if not move:
-#             return False
-
-#         if "from" not in move or "to" not in move:
-#             return False
-
-#         start = move["from"]
-#         end = move["to"]
-
-#         if start is None or end is None:
-#             return False
-
-#         # bounds check
-#         for x in start + end:
-#             if x < 0 or x > 7:
-#                 return False
-
-#         return True
-
-#     # =====================================================
-#     # REQUIRED: COORDINATE MAPPING
-#     # =====================================================
-#     def map_to_coordinates(self, location):
-
-#         # Vision already returns grid coords (row, col)
-#         return location
-
-#     # =====================================================
-#     # STATE
-#     # =====================================================
-#     def get_state(self):
-
-#         return {
-#             "game": self.name,
-#             "board": self.board_state,
-#             "ratings":random.randint(0,1),
-
-#             "game_over": self.is_game_over()
-#         }
-
-#     # =====================================================
-#     # WRAP FOR MINIMAX
-#     # =====================================================
-#     def _wrap_board(self, board_state):
-
-#         class Wrapper:
-#             def __init__(self, board):
-#                 self.board = board
-
-#         return Wrapper(board_state)
-
-#     # =====================================================
-#     # MOVE DETECTION
-#     # =====================================================
-#     def _find_move(self, old_board, new_board):
-
-#         start = None
-#         end = None
-
-#         for r in range(8):
-#             for c in range(8):
-
-#                 old_piece = old_board[r][c]
-#                 new_piece = new_board[r][c]
-
-#                 if old_piece != 0 and new_piece == 0:
-#                     start = (r, c)
-
-#                 if old_piece == 0 and new_piece != 0:
-#                     end = (r, c)
-
-#         if start is None or end is None:
-#             raise ValueError("Could not detect move")
-
-#         return {
-#             "from": start,
-#             "to": end
-#         }
-    
-#     def detect_human_move(self, scanned_board):
-#         move = self.find_move_from_board(scanned_board)
-
-#         if move is None:
-#             return None
-
-#         return move
-    
-    
-#     def find_move_from_board(self, scanned_board):
-#         """
-#         Compare the previous board with a newly scanned board
-#         and determine the player's move.
-#         """
-
-#         if self.board_state is None:
-#             self.board_state = scanned_board
-#             return None
-
-#         old_board = self.board_state
-
-#         start = None
-#         end = None
-
-#         for r in range(8):
-#             for c in range(8):
-
-#                 old_piece = old_board[r][c]
-#                 new_piece = scanned_board[r][c]
-
-#                 # Piece moved away
-#                 if old_piece != 0 and new_piece == 0:
-#                     start = (r, c)
-
-#                 # Piece arrived here
-#                 elif old_piece == 0 and new_piece != 0:
-#                     end = (r, c)
-
-#                 # Promotion or king change
-#                 elif (
-#                     old_piece != 0
-#                     and new_piece != 0
-#                     and old_piece != new_piece
-#                 ):
-#                     end = (r, c)
-
-#         if start is None or end is None:
-#             return None
-
-#         move = {
-#             "from": start,
-#             "to": end
-#         }
-
-#         # Update stored board
-#         self.board_state = scanned_board
-
-#         return move
-#     # =====================================================
-#     # ROBOT MOVE
-#     # =====================================================
-#     def get_robot_move(self, board_state):
-
-#         move = self.get_best_move(board_state)
-
-#         return {
-#     "type": "dame_action",
-#     "action": "move",
-#     "data": {
-#         "from": move["from"],
-#         "to": move["to"]
-#     }
-# }
-
-#     # =====================================================
-#     # RESET
-#     # =====================================================
-#     def reset(self):
-
-#         self.board_state = None
-
-
-
-
 from games.base_game import BaseGame
-import random
 
 from games.dame.engine import (
-    Dame,
-    minimax,
-    RED,
-    WHITE
+    DameEngine,
+    PLAYER_1,
+    PLAYER_2,
+    STATUS_ONGOING,
+    STATUS_P1_WINS,
+    STATUS_P2_WINS,
+    STATUS_DRAW,
 )
-
 from games.dame.vision import DameVision
 
+import random
 
 
 class DameGame(BaseGame):
-
 
     def __init__(self):
 
         super().__init__("dame")
 
-        self.engine = Dame()
+        self.engine = DameEngine()
 
         self.vision = DameVision()
 
+        # Engine owns the board
+        self.engine.board = self.engine.initial_board()
+
         self.board_state = self.engine.board
-        # print(self.board_state)
 
-        self.search_depth = 4
+        self.ai_player = PLAYER_1
+        self.human_player = PLAYER_2
+        self.current_player = self.ai_player
 
-
+        self.search_depth = 8
 
     # =====================================================
     # VISION
     # =====================================================
 
-    def scan_board(self, frame):
+    def scan_board(self):
 
-        board = self.vision.scan_board(frame)
+        board = self.vision.scan_board()
 
+        self.engine.board = board
         self.board_state = board
-
-        self.engine.load_board(board)
 
         return board
 
-
-
     # =====================================================
-    # AI MOVE USING MINIMAX
+    # HUMAN MOVE DETECTION
     # =====================================================
 
-    # def get_best_move(self, board_state):
-
-
-    #     # Create engine board
-
-    #     engine = Game()
-
-    #     engine.load_board(
-    #         board_state
-    #     )
-
-
-    #     # Run minimax
-
-    #     score, new_engine = minimax(
-    #         engine,
-    #         self.search_depth,
-    #         True
-    #     )
-
-
-    #     if new_engine is None:
-
-    #         return None
-
-
-
-    #     move = self._find_move(
-    #         board_state,
-    #         new_engine.board
-    #     )
-
-
-    #     return move
-    
-    def get_best_move(self, board_state):
-
-        self.engine.load_board(board_state)
-
-        score, new_engine = minimax(
-            self.engine,
-            self.search_depth,
-            True
-        )
-
-        if new_engine is None:
+    def detect_human_move(self, scanned_board):
+        self.current_player=self.human_player
+        if self.current_player != self.human_player:
             return None
 
-        return self._find_move(
-            board_state,
-            new_engine.board
+        return self.find_move_from_board(
+            scanned_board
         )
 
+    def find_move_from_board(self, scanned_board):
 
+        """
+        Compare the stored board with a newly scanned board and
+        determine the human move. Unlike Achi, a single Dame move can
+        remove several opposing pieces at once (a multi-jump capture),
+        so this looks for exactly one square where the human's piece
+        disappeared (the origin), exactly one square where it appeared
+        (the destination), and any number of squares where the AI's
+        pieces disappeared (captures picked up along the way).
+
+        Note: the board diff alone cannot recover the intermediate
+        squares visited during a multi-jump (only the physical piece's
+        start and end positions are observable), but the engine does not
+        need that path to validate or apply the move -- only the final
+        `from`, `to`, and `captured` set matter.
+        """
+
+        if self.board_state is None:
+            return None
+
+        old_board = self.board_state
+        new_board = scanned_board
+
+        start = None
+        end = None
+        captured = []
+
+        for i in range(32):
+
+            before = old_board[i]
+            after = new_board[i]
+
+            if before == after:
+                continue
+
+            # Piece removed
+            if self.engine.owner(before) == self.human_player and after == 0:
+                start = i
+
+            # Piece placed
+            elif before == 0 and self.engine.owner(after) == self.human_player:
+                end = i
+
+            # Opponent piece removed along the way (capture)
+            elif self.engine.owner(before) == self.ai_player and after == 0:
+                captured.append(i)
+
+        if start is None or end is None:
+            return None
+
+        promotion = (
+            self.engine.is_man(old_board[start])
+            and self.engine.is_king(new_board[end])
+        )
+
+        if captured:
+            move = {
+                "type": "capture",
+                "from": start,
+                "to": end,
+                "captured": captured,
+                "promotion": promotion,
+            }
+        else:
+            move = {
+                "type": "move",
+                "from": start,
+                "to": end,
+                "promotion": promotion,
+            }
+
+        return move
+
+    # =====================================================
+    # AI
+    # =====================================================
+
+    def get_best_move(self, board_state):
+        # self.current_player=self.ai_player
+        if self.current_player != self.ai_player:
+            # print("im not equal")
+            return None
+
+        self.engine.board = board_state
+
+        self.board_state = board_state
+
+        # DameEngine.best_move already returns a move in the engine's
+        # native dict format ({"type", "from", "to", "captured", ...}),
+        # so -- unlike TapatanEngine's tuple moves -- no reformatting is
+        # needed here.
+        move = self.engine.best_move(
+            self.engine.board,
+            self.ai_player,
+            self.search_depth
+        )
+
+        return move
+
+    # =====================================================
+    # RULES
+    # =====================================================
+
+    def validate_move(self, move, player=None):
+
+        if player is None:
+
+            player = self.ai_player
+
+        if move is None:
+
+            return False
+
+        return self.engine.is_valid_move(
+
+            self.engine.board,
+
+            move,
+
+            player
+        )
 
     # =====================================================
     # APPLY MOVE
     # =====================================================
 
-    def apply_move(self, move):
+    def apply_move(self, move, player=None):
 
+        if player is None:
 
-        if not self.validate_move(move):
+            player = self.ai_player
 
-            return False
+        print(move)
 
+        # DameEngine.apply_move infers the moving player from the piece
+        # sitting on `move["from"]`, so it doesn't take a player arg.
+        self.engine.board = self.engine.apply_move(
 
+            self.engine.board,
 
-        r1,c1 = move["from"]
+            move
+        )
 
-        r2,c2 = move["to"]
+        self.board_state = self.engine.board
 
+        self.current_player = (
+            self.human_player
+            if player == self.ai_player
+            else self.ai_player
+        )
 
-
-        piece = self.board_state[r1][c1]
-
-
-        self.board_state[r1][c1] = 0
-
-
-        self.board_state[r2][c2] = piece
-
-
-
-        return True
-
-
+        return self.engine.board
 
     # =====================================================
     # GAME OVER
@@ -398,242 +221,171 @@ class DameGame(BaseGame):
 
     def is_game_over(self):
 
-
-        if self.board_state is None:
-
-            return False
-
-
-
-        red = False
-        white = False
-
-
-
-        for row in self.board_state:
-
-            for p in row:
-
-
-                if p in [RED,11]:
-
-                    red = True
-
-
-                if p in [WHITE,22]:
-
-                    white = True
-
-
-
-        return not(red and white)
-
-
-
-    # =====================================================
-    # VALIDATE MOVE
-    # =====================================================
-
-    def validate_move(self,move):
-
-
-        if move is None:
-
-            return False
-
-
-
-        if "from" not in move or "to" not in move:
-
-            return False
-
-
-
-        for x in move["from"] + move["to"]:
-
-
-            if x < 0 or x > 7:
-
-                return False
-
-
-
-        return True
-
-
-
-    # =====================================================
-    # FIND MOVE FROM BOARD DIFFERENCE
-    # =====================================================
-
-    def _find_move(self,old_board,new_board):
-
-
-        start = None
-
-        end = None
-
-
-
-        for r in range(8):
-
-            for c in range(8):
-
-
-                old = old_board[r][c]
-
-                new = new_board[r][c]
-
-
-
-                # piece moved away
-
-                if old != 0 and new == 0:
-
-                    start = (r,c)
-
-
-
-                # piece arrived
-
-                if old == 0 and new != 0:
-
-                    end = (r,c)
-
-
-
-        if start is None or end is None:
-
-            raise Exception(
-                "Cannot detect AI move"
-            )
-
-
-
-        return {
-
-            "from":start,
-
-            "to":end
-
-        }
-
-
-
-    # =====================================================
-    # HUMAN MOVE DETECTION
-    # =====================================================
-
-    def detect_human_move(self, scanned_board):
-
-        return self.find_move_from_board(
-            scanned_board
+        status = self.engine.get_status(
+            self.engine.board,
+            self.current_player
         )
 
+        return status != STATUS_ONGOING
 
+    def get_winner(self):
 
-    def find_move_from_board(self,new_board):
+        status = self.engine.get_status(
+            self.engine.board,
+            self.current_player
+        )
 
+        if status == STATUS_DRAW:
+            return "draw"
 
-        if self.board_state is None:
-
-            self.board_state = new_board
-
+        if status == STATUS_P1_WINS:
+            winner_player = PLAYER_1
+        elif status == STATUS_P2_WINS:
+            winner_player = PLAYER_2
+        else:
             return None
 
+        if winner_player == self.ai_player:
 
+            return "robot"
 
-        old = self.board_state
+        if winner_player == self.human_player:
 
+            return "human"
 
-        start=None
+        return None
 
-        end=None
+    # =====================================================
+    # PHASE
+    # =====================================================
 
+    def get_phase(self):
 
+        """
+        Dame has no separate placement phase (all 24 pieces start on the
+        board), so "phase" instead reports whether the side to move is
+        currently under mandatory capture -- useful for the UI/robot to
+        highlight forced moves the way Achi's phase flag drives its own
+        placement/movement UI.
+        """
 
-        for r in range(8):
+        moves = self.engine.get_legal_moves(
+            self.engine.board,
+            self.current_player
+        )
 
-            for c in range(8):
+        if moves and moves[0]["type"] == "capture":
+            return "capture"
 
+        return "movement"
 
-                before = old[r][c]
+    # =====================================================
+    # ROBOT MOVE
+    # =====================================================
 
-                after = new_board[r][c]
+    def get_robot_move(self, board_state):
 
-
-
-                if before != 0 and after == 0:
-
-                    start=(r,c)
-
-
-
-                elif before == 0 and after !=0:
-
-                    end=(r,c)
-
-
-
-        if start is None or end is None:
-
+        if self.current_player != self.ai_player:
             return None
-
-
-
-        self.board_state = new_board
-
-
-
-        return {
-
-            "from":start,
-
-            "to":end
-
-        }
-
-
-
-    # =====================================================
-    # ROBOT COMMAND
-    # =====================================================
-
-    def get_robot_move(self,board_state):
-
 
         move = self.get_best_move(
             board_state
         )
 
+        if move is None:
+            print("did not")
+            return None  
 
+        # print(move)
+
+        data = {
+            "type": move["type"],
+            "from": move["from"],
+            "to": move["to"],
+        }
+
+        if move["type"] == "capture":
+            data["captured"] = move["captured"]
+
+        if move.get("promotion"):
+            data["promotion"] = True
+
+        return {
+            "type": "dame_action",
+            "action": move["type"],
+            "data": data
+        }
+
+    # =====================================================
+    # BOARD COORDINATES
+    # =====================================================
+
+    # NOTE: these four numbers are placeholders and MUST be calibrated
+    # against your real physical board before use with a robot arm.
+    # ORIGIN_X / ORIGIN_Y is the (x, y) position of dark-square (row=0,
+    # col=1) -- the top-left playable square -- and STEP_X / STEP_Y is
+    # the physical distance between adjacent square centers.
+    ORIGIN_X = 50
+    ORIGIN_Y = 180
+    STEP_X = 25
+    STEP_Y = -25
+
+    def map_to_coordinates(self, position):
+
+        """
+        Converts a Dame square index (0-31) into physical (x, y)
+        coordinates for the robot arm, using DameEngine's row/col
+        geometry. Recalibrate ORIGIN_X/Y and STEP_X/Y (or replace this
+        with a lookup table, as Achi does) to match your actual board.
+        """
+
+        row, col = self.engine.sq_to_rc[position]
+        # print(row,col)
+        print(position)
+
+        x = self.ORIGIN_X + (col * self.STEP_X)+25
+        y = self.ORIGIN_Y + (row * self.STEP_Y)
+        print(x,y,"this x and y")
+        return (x, y)
+
+    # =====================================================
+    # ROBOT COMMAND
+    # =====================================================
+
+    def convert_to_robot_command(self, move):
 
         if move is None:
 
             return None
 
+        command = {
 
+            "action": move["type"],
 
-        return {
+            "source":
+                self.map_to_coordinates(
+                    move["from"]
+                ),
 
-
-            "type":"dame_action",
-
-
-            "action":"move",
-
-
-            "data":{
-
-                "from":move["from"],
-
-                "to":move["to"]
-
-            }
+            "destination":
+                self.map_to_coordinates(
+                    move["to"]
+                )
 
         }
 
+        if move["type"] == "capture":
 
+            command["removals"] = [
+                self.map_to_coordinates(sq)
+                for sq in move["captured"]
+            ]
+
+        if move.get("promotion"):
+
+            command["promotion"] = True
+
+        return command
 
     # =====================================================
     # STATE
@@ -641,33 +393,38 @@ class DameGame(BaseGame):
 
     def get_state(self):
 
-        print(self.board_state)
         return {
 
-            "game":self.name,
+            "game": self.name,
 
-            "board":self.board_state,
+            "board": self.engine.board,
 
-            "rating":random.randint(0,1),
+            "phase": self.get_phase(),
 
-            "game_over":self.is_game_over()
+            "current_player": (
+                "robot"
+                if self.current_player == self.ai_player
+                else "human"
+            ),
+
+            "winner": self.get_winner(),
+
+            "ratings": random.randint(0, 1),
+
+            "game_over": self.is_game_over()
 
         }
-
-        # =====================================================
-    # COORDINATE MAPPING
-    # =====================================================
-
-    def map_to_coordinates(self, location):
-
-        # Dame already uses row,col coordinates
-        return location
 
     # =====================================================
     # RESET
     # =====================================================
 
     def reset(self):
-        # print("RESET CALLED")
 
-        self.board_state=self.engine.board
+        self.engine = DameEngine()
+
+        self.engine.board = self.engine.initial_board()
+
+        self.current_player = self.ai_player
+
+        self.board_state = self.engine.board

@@ -219,6 +219,7 @@ function OwareGame(){
 
     const [response, setResponse] = useState('')
 
+    const [getReward, setGetReward] = useState(true)
 
 
     const woodTap = useRef(new Audio(woodTapSound))
@@ -527,7 +528,7 @@ function OwareGame(){
     const [gameOver, setGameOver] = useState(true)
     const [playerScore, setPlayerScore] = useState()
     const [robotScore, setRobotScore] = useState()
-    const [playerWins, setPlayerWins] = useState(false)
+    const [playerWins, setPlayerWins] = useState(true)
     const [agokansieWins, setAgokansieWins] = useState(false)
     const [winner, setWinner] = useState('')
 
@@ -610,6 +611,33 @@ function OwareGame(){
         woodTap.current.currentTime = 0
         woodTap.current.play()
     }
+
+    const claimReward = async () => {
+            if (victor !== 'robot' ) return
+            
+            try {
+                const response = await fetch(`${API}/api/game/dispense`,
+                    {
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': "application/json",
+                    },
+                    }
+                )
+                
+            }
+
+            catch (error) { 
+                console.log(error.message)
+            }
+        
+
+        }
+     
+    const handleReward = () => {
+        claimReward()
+        setGetReward(false)
+    }
     
     
     return(
@@ -633,7 +661,7 @@ function OwareGame(){
  {/* game over screen */}
 
             {
-                gameOver  ? 
+            gameOver ?
                 
                 <div className='absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-220 h-150 z-100'>
                     <div className='flex flex-col justify-center items-center rounded-3xl border-4 border-[#b98b56] bg-[#efe0c2] shadow-2xl overflow-hidden bg-dark/98 p-5 gap-10'>
@@ -677,12 +705,11 @@ function OwareGame(){
                                 <RotateCcw/>
                                 <p>PLAY AGAIN </p>  
                             </button>
-
-                             <button className='flex items-center justify-center p-3 gap-2 border-1 rounded-lg cursor-pointer font-bold text-xl animate-float text-midGold hover:scale-95 duration-300  '>
+                         { playerWins && getReward ?  <button className='flex items-center justify-center p-3 gap-2 border-1 rounded-lg cursor-pointer font-bold text-xl animate-float text-midGold hover:scale-95 duration-300' onClick={handleReward} >
                                 <Trophy />
                                 <p>CLAIM YOUR REWARD</p>
-                            </button>
-
+                            </button>  : null
+                            }
                              <button className='flex items-center justify-center p-3 gap-2 border-1 rounded-lg cursor-pointer font-bold text-xl text-midGold hover:scale-95 duration-300' onClick={BackToHome}>
                                 <House />
                                 <p>BACK TO HOME</p>
@@ -693,9 +720,8 @@ function OwareGame(){
                 </div> 
                 
                 
-                
-                : null
-
+             : null
+              
             }
 
             
@@ -710,6 +736,7 @@ function OwareGame(){
         {/* Header */}
         <div className="relative py-2 text-center border-b border-[#c8aa73] ">
 
+        
           <button className="absolute right-3 top-3 cursor-pointer hover:scale-110 transition" onClick={returnScreen}>
             <CircleX className='size-9 text-gold'/>
           </button>
@@ -901,11 +928,6 @@ function OwareGame(){
                     <p>{`Status: ${status}`}</p>
                 </div>
             </div>
-
-
-
-            
-
        
             <div className='flex flex-row items-start gap-4 p-6 shrink-0' >
                 

@@ -413,3 +413,37 @@ put the detect human move function in dame and achi
 
 
 tell andre that i have change how the board componentss
+
+
+
+
+hsv values for blue 
+lh2
+ls90
+lv141
+
+uvh179
+uvs225
+uv225
+
+
+
+hsv values for pink
+lh0
+ls0
+lv226
+
+uvh178
+uvs35
+uv225
+
+
+Laser:
+  pwm_hz: 5000
+  output_pin: gpio.18
+  enable_pin: NO_PIN
+  disable_with_s0: false
+  s0_with_disable: true
+  tool_num: 0
+  speed_map: 0=0.000% 255=100.000%
+  off_on_alarm: true
