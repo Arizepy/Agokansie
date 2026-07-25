@@ -9,7 +9,7 @@ import threading
 
 class RobotController:
 
-    def __init__(self, port="COM6", baudrate=115200):
+    def __init__(self, port="COM3", baudrate=115200):
 
         self.port = port
         self.baudrate = baudrate

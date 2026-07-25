@@ -10,7 +10,7 @@ from session.game_session import game_session
 
 try:
     from services.robot_controller import RobotController
-    robot_controller = RobotController("COM6", 115200)
+    robot_controller = RobotController("COM3", 115200)
 except Exception as e:
     print(f"Robot initialization failed: {e}")
     robot_controller = None
