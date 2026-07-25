@@ -117,6 +117,7 @@ const LessonState = () => {
 }
 
 const nextLessonNavigation = () => {
+    playWoodTap()
     if (nextLesson){
         navigate('/damelesson5')
     } else {
@@ -134,6 +135,7 @@ const PreviousLesson = () => {
 }
 
 const PreviousLessonNavigation = () => {
+    playWoodTap()
     if (previousLessonVariable){
         navigate('/damelesson3')
     } else {

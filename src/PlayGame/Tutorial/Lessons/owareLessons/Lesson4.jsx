@@ -26,6 +26,7 @@ const hightlight  = useRef(new Audio(Hightlight))
 const playPlacePiece = () => {
     if (pieceSound.current){
         pieceSound.current.currentTime = 0; 
+        pieceSound.current.volume = 0.01
         pieceSound.current.play()
     }
 }
@@ -33,7 +34,15 @@ const playPlacePiece = () => {
 const playHighLight = () => {
     if (hightlight.current) {
         hightlight.current.currentTime = 0;
+        hightlight.current.volume = 0.01
         hightlight.current.play();
+    }
+}
+const playWoodTap = () => {
+    if (woodTap.current){
+        woodTap.current.currentTime = 0;
+        woodTap.current.volume = 0.1
+        woodTap.current.play()
     }
 }
 
@@ -110,6 +119,7 @@ useEffect(() => {
 }, [currentStep])
 
 const nextLessonNavigation = () => {
+    playWoodTap
     if (nextLesson){
         navigate('/owarelesson5')
     } 
@@ -127,6 +137,7 @@ const PreviousLesson = () => {
 }
 
 const PreviousLessonNavigation = () => {
+    playWoodTap()
     if (previousLessonVariable){
         navigate('/owarelesson3')
     } else {
@@ -155,6 +166,24 @@ useEffect (() =>{
     }
 
 }, [currentStep])
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
+
 
 
 // BOARD STATE

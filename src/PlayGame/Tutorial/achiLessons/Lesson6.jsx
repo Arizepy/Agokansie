@@ -9,12 +9,21 @@ import victorySound from '../../../assets/sound/victory.mp3'
 import HightLight from '../../../assets/sound/blocked.mp3'
 import { gsap } from 'gsap'
 
+//Lesson sound 
+import tipsOne from '../../../assets/sound/achi/tipsOne.m4a'
+import tipsTwo from '../../../assets/sound/achi/tipsTwo.m4a'
+import tipsThree from '../../../assets/sound/achi/tipsThree.m4a'
+import tipsFour from '../../../assets/sound/achi/tipsFour.m4a'
+
+
 
 function AchiLesson6(){
 
 const woodTap = useRef(new Audio(woodTapSound))
 const victory = useRef(new Audio(victorySound))
 const highlight = useRef( new Audio (HightLight))
+const voiceRef = useRef(new Audio());
+
 const thinking = "..."
 
 const PlayWoodTap = () => { 
@@ -41,22 +50,22 @@ const playVictory = () => {
 const steps = [{
     step: '1',
     text: "Try to control the centre position whenever possible. A piece placed in the centre has the greatest number of movement options and offers more flexibility.",
-    voice: 'Foolish boy Siaw'
+    voice: tipsOne
 
 },{
     step: '2',
     text: "Look for opportunities to create multiple winning threats at the same time. This forces your opponent to defend against more than one possible line.",
-    voice: 'Foolish boy Siaw'
+    voice: tipsTwo
 
 },{
     step: '3',
     text: "Building a V-shaped formation with an empty centre can often create an unavoidable winning opportunity if your opponent is not careful.",
-    voice: 'Foolish boy Siaw'
+    voice: tipsThree
 
 },{
     step: '4',
     text: "Always pay attention to your opponent's next move. Blocking a potential winning line is often just as important as creating one of your own.",
-    voice: 'Foolish boy Siaw'
+    voice: tipsFour
 
 } ]
 
@@ -100,6 +109,7 @@ const goForward = () => {
     }
 
     const nextLessonNavigation = () => {
+        PlayWoodTap
         if (nextLesson){
             navigate('/selectionScreen')
         } else {
@@ -117,6 +127,7 @@ const goForward = () => {
     }
 
     const PreviousLessonNavigation = () => {
+        PlayWoodTap()
         if (previousLessonVariable){
             navigate('/achilesson5')
         } else {
@@ -129,6 +140,23 @@ const goForward = () => {
         LessonState()
         PreviousLesson()
     }, [currentStep])
+
+    useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
 
 
 //Board setup
@@ -640,7 +668,7 @@ return(
         </div>
 
         <button onClick={nextLessonNavigation} className='absolute bottom-5 right-5 border-none p-3 text-xl rounded-lg cursor-pointer bg-gradient-to-br from-[#A47551] to-[#6B4226] text-[#F7E7CE] uppercase font-bold hover:scale-95 transition-smooth duration-300 flex items-center justify-center gap-3 bg-dark/30'> 
-            <p>{nextLesson ? 'Next Lesson' : 'Next'}</p>
+            <p>{nextLesson ? 'Complete Tutorial' : 'Next'}</p>
             <CornerDownRight /> 
         </button>
 

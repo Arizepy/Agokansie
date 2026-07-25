@@ -6,35 +6,48 @@ import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lu
 import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 
+//Lesson sound 
+import rulesOne from '../../../assets/sound/achi/rulesOne.m4a'
+import rulesTwo from '../../../assets/sound/achi/rulesTwo.m4a'
+import rulesThree from '../../../assets/sound/achi/rulesThree.m4a'
+import rulesFour from '../../../assets/sound/achi/rulesFour.m4a'
+
 
 
 function AchiLesson2(){
 
 const woodTap = useRef(new Audio(woodTapSound))
+const voiceRef = useRef(new Audio());
+
 const thinking = "..."
 
 const steps = [{
         step: '1',
         text: "Handle all playing pieces carefully when placing or moving them. Damaged or misplaced pieces may affect the robot's ability to detect and play the game correctly.",
-        voice: 'Foolish boy Siaw'
+        voice: rulesOne
 
     },{
         step: '2',
         text: "Keep your hands away from the board whenever the robot is making its move. Wait until the robot has completely stopped before touching any piece on the board.",
-        voice: 'Foolish boy Siaw'
+        voice: rulesTwo
 
     },{
         step: '3',
         text: "Move only the piece selected for your turn. Do not adjust, rotate, or reposition any other pieces unless instructed by the game.",
-        voice: 'Foolish boy Siaw'
+        voice: rulesThree
 
     },{
         step: '4',
         text: "Respect the robot's turn and your opponent's turn at all times. Do not interrupt gameplay or interfere with the robot's movements, as doing so may affect the game's accuracy.",
-        voice: 'Foolish boy Siaw'
+        voice: rulesFour
 
     } ]
-
+const playWoodTap = () => { 
+    if (woodTap.current) { 
+        woodTap.current.currentTime = 0; 
+        woodTap.current.play()
+    }
+}
 //Navigation
 const navigate = useNavigate()
 
@@ -75,6 +88,7 @@ const LessonState = () => {
 }
 
 const nextLessonNavigation = () => {
+    playWoodTap()
     if (nextLesson){
         navigate('/achilesson3')
     } else {
@@ -92,6 +106,7 @@ const PreviousLesson = () => {
 }
 
 const PreviousLessonNavigation = () => {
+    playWoodTap()
     if (previousLessonVariable){
         navigate('/achilesson1')
     } else {
@@ -103,6 +118,23 @@ const PreviousLessonNavigation = () => {
 useEffect(() => {
     LessonState()
     PreviousLesson()
+}, [currentStep])
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
 }, [currentStep])
 
 //Board state

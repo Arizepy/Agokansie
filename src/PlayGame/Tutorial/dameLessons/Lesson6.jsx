@@ -8,8 +8,15 @@ import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
 import Victory from '../../../assets/sound/victory.mp3'
-
 import { gsap } from 'gsap'
+
+//Lesson sound 
+
+import tipsOne from '../../../assets/sound/dame/tipsOne.m4a'
+import tipsTwo from '../../../assets/sound/dame/tipsTwo.m4a'
+import tipsThree from '../../../assets/sound/dame/tipsThreee.m4a'
+import tipsFour from '../../../assets/sound/dame/tipsFOur.m4a'
+
 
 export default  function DameLesson6(){
 
@@ -116,6 +123,7 @@ const LessonState = () => {
 }
 
 const nextLessonNavigation = () => {
+    playWoodTap()
     if (nextLesson){
         navigate('/damelesson7')
     } else {
@@ -133,6 +141,7 @@ const PreviousLesson = () => {
 }
 
 const PreviousLessonNavigation = () => {
+    playWoodTap()
     if (previousLessonVariable){
         navigate('/damelesson5')
     } else {

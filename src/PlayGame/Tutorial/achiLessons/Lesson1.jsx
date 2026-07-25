@@ -7,28 +7,41 @@ import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import { gsap } from 'gsap'
 
+//Lesson sound 
+import introOne from '../../../assets/sound/achi/introOne.m4a'
+import introTwo from '../../../assets/sound/achi/introTwo.m4a'
+import introThree from '../../../assets/sound/achi/introThree.m4a'
 
 function AchiLesson1(){
 
 const woodTap = useRef(new Audio(woodTapSound))
+const voiceRef = useRef(new Audio());
+
 const thinking = "..."
 
  const steps = [{
         step: '1',
         text: "Welcome! I'm Agokansie, your Achi companion. Whether this is your very first game or you're looking to sharpen your skills, I'll guide you every step of the way. By the end of this tutorial, you'll understand the rules of achi, learn how to move pieces, and tactical tricks to ensure victory. Let's begin!",
-        voice: 'Foolish boy Siaw'
+        voice: introOne
 
     },{
         step: '2',
         text: "Archi is a traditional strategy game played by many people across Ghana. Despite its simple 3×3 board, it requires careful planning and smart decision-making.",
-        voice: 'Foolish boy Siaw'
+        voice: introTwo
 
     },{
         step: '3',
         text: "The objective of the game is to arrange all three of your pieces in a straight line. This line may be horizontal, vertical, or diagonal.",
-        voice: 'Foolish boy Siaw'
+        voice: introThree
 
     } ]
+
+    const playWoodTap = () => { 
+    if (woodTap.current) { 
+        woodTap.current.currentTime = 0; 
+        woodTap.current.play()
+    }
+}
 
 //Navigation
 
@@ -75,6 +88,7 @@ LessonState()
 }, [currentStep])
 
 const nextLessonNavigation = () => {
+    playWoodTap()
 if (nextLesson){
     navigate('/achilesson2')
 } 
@@ -82,6 +96,24 @@ else{
     nextStep()
 }
 }
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
+
 
 //Board state
 const getBoardState = () => {

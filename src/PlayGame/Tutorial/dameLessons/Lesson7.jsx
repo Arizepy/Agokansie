@@ -11,7 +11,11 @@ import Victory from '../../../assets/sound/victory.mp3'
 
 import { gsap } from 'gsap'
 
-
+//Lesson sound 
+import endOne from '../../../assets/sound/dame/endOne.m4ae'
+import endTwo from '../../../assets/sound/dame/endTwo.m4a'   
+import endThree from '../../../assets/sound/dame/endThree.m4a'
+import endFour from '../../../assets/sound/dame/endFour.m4a'
 export default  function DameLesson7(){
 
 const woodTap = useRef(new Audio(woodTapSound))
@@ -20,7 +24,7 @@ const hint = useRef (new Audio(showHint))
 const victory = useRef(new Audio(Victory))
 const voiceRef = useRef(new Audio());
 
-
+                                                                                                                       
 const playWoodTap = () => { 
     if (woodTap.current) { 
         woodTap.current.currentTime = 0; 
@@ -52,22 +56,21 @@ const thinking = "..."
  const steps = [{
         step: '1',
         text: "The game ends when one player captures all of their opponent's pieces.",
-        voice: 'Foolish boy Siaw'
+        voice: endOne
 
     },{
         step: '2',
         text: "A player also wins if their opponent still has pieces remaining but none of them can make a legal move.",
-        voice: 'Foolish boy Siaw'
+        voice: endTwo
 
     },{
         step: '3',
         text: "If neither player can make progress by capturing or blocking the other's remaining pieces, both players may agree to declare the game a draw.",
-        voice: 'Foolish boy Siaw'
-
+        voice: endThree
     },{
         step: '4',
         text: "After the game has ended, count the remaining pieces, congratulate the winner, and reset the board to prepare for another match.",
-        voice: 'Foolish boy Siaw'
+        voice: endFour
 
     } ]
 
@@ -117,6 +120,7 @@ const getBoardState = () => {
     }
 
     const nextLessonNavigation = () => {
+        playWoodTap()
         if (nextLesson){
             navigate('/selectionScreen')
         } else {
@@ -134,6 +138,7 @@ const getBoardState = () => {
     }
 
     const PreviousLessonNavigation = () => {
+        playWoodTap()
         if (previousLessonVariable){
             navigate('/damelesson6')
         } else {

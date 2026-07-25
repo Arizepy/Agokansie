@@ -8,33 +8,48 @@ import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import victorySound from '../../../assets/sound/victory.mp3'
 
+//Lesson sound 
+import droppingOne from '../../../assets/sound/achi/droppingOne.m4a'
+import droppingTwo from '../../../assets/sound/achi/droppingTwo.m4a'
+import droppingThree from '../../../assets/sound/achi/droppingThree.m4a'
+import droppingFour from '../../../assets/sound/achi/droppingFour.m4a'
+
 
 function AchiLesson3(){
 
 //Contents
 const woodTap = useRef(new Audio(woodTapSound))
 const victory = useRef(new Audio(victorySound))
+const voiceRef = useRef(new Audio());
+
 const thinking = "..."
+
+const playWoodTap = () => { 
+    if (woodTap.current) { 
+        woodTap.current.currentTime = 0; 
+        woodTap.current.play()
+    }
+}
 
 const steps = [{
         step: '1',
         text: "At the beginning of the game, players take turns placing one of their pieces onto any empty point on the board.",
-        voice: 'Foolish boy Siaw'
+        voice: droppingOne
 
     },{
         step: '2',
         text: "Continue taking turns until all three pieces belonging to each player have been placed on the board.",
-        voice: 'Foolish boy Siaw'
+        voice: droppingTwo
 
     },{
         step: '3',
         text: "If a player forms a straight line while placing their final piece, they immediately win the game without entering the movement phase.",
-        voice: 'Foolish boy Siaw'
+        voice: droppingThree
 
     },{
         step: '4',
         text: "If neither player creates a straight line after all six pieces have been placed, the game continues with players moving their pieces around the board.",
-        voice: 'Foolish boy Siaw'
+        voice: droppingFour
 
     } ]
 
@@ -78,6 +93,7 @@ const LessonState = () => {
 }
 
 const nextLessonNavigation = () => {
+    playWoodTap()
     if (nextLesson){
         navigate('/achilesson4')
     } else {
@@ -95,6 +111,7 @@ const PreviousLesson = () => {
 }
 
 const PreviousLessonNavigation = () => {
+    playWoodTap()
     if (previousLessonVariable){
             navigate('/achilesson2')
     } else {
@@ -108,6 +125,24 @@ useEffect(() => {
     PreviousLesson()
     resetWin()
 }, [currentStep])
+
+useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
+
 
 //Board state
 

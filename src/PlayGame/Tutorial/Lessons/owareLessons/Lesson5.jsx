@@ -34,6 +34,7 @@ const voiceRef = useRef(new Audio());
 const playPlacePiece = () => {
     if (pieceSound.current){
         pieceSound.current.currentTime = 0; 
+        pieceSound.current.volume =0.01
         pieceSound.current.play()
     }
 }
@@ -41,6 +42,7 @@ const playPlacePiece = () => {
 const playHighLight = () => {
     if (hightlight.current) {
         hightlight.current.currentTime = 0;
+        Highlight.current.volume = 0.1
         hightlight.current.play();
     }
 }
@@ -48,6 +50,7 @@ const playHighLight = () => {
 const playError = () => {
     if (error.current) {
         error.current.currentTime = 0; 
+        error.current.volume = 0.1
         error.current.play()
     }
 }
@@ -55,12 +58,14 @@ const playError = () => {
 const playVictory = () => {
     if (victory.current){
         victory.current.currentTime = 0;
+        victory.current.volume = 0.1;
         victory.current.play()
     }
 }
 const playWoodTap = () => {
     if (woodTap.current){
         woodTap.current.currentTime = 0;
+        woodTap.current.volume = 0.1
         woodTap.current.play()
     }
 }
@@ -113,15 +118,12 @@ const [previousLesson, setPreviousLesson] = useState(false)
 const [previousLessonVariable, setPreviousLessonVariable] = useState(false)
 
 const previousStep = () => {
-    setCurrentStep((previous) => previous === 0 ? previous :  previous - 1)
-    console.log(steps[currentStep].step)
-
-    
+    setCurrentStep((previous) => previous === 0 ? previous :  previous - 1)    
 }
 
 const nextStep = () => {
     setCurrentStep((previous) => previous === steps.length - 1 ? previous : previous + 1)
-    console.log(steps[currentStep].step)
+   
 }
 
 const LessonState = () => {
@@ -138,6 +140,7 @@ useEffect(() => {
 }, [currentStep])
 
 const nextLessonNavigation = () => {
+    playWoodTap()
     if (nextLesson){
         navigate('/owarelesson6')
     } 
@@ -147,6 +150,7 @@ const nextLessonNavigation = () => {
 }
 
 const PreviousLesson = () => {
+    playWoodTap
     if(currentStep === 0){
         setPreviousLessonVariable(true)
     } else {
@@ -155,6 +159,7 @@ const PreviousLesson = () => {
 }
 
 const PreviousLessonNavigation = () => {
+    playWoodTap()
     if (previousLessonVariable){
         navigate('/owarelesson4')
     } else {

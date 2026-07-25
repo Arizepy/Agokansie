@@ -8,11 +8,18 @@ import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import VictorySound from '../../../assets/sound/victory.mp3'
 import { gsap } from 'gsap'
 
+//Lesson sound
+import endOne from '../../../assets/sound/achi/endOne.m4a'
+import endTwo from '../../../assets/sound/achi/endTwo.m4a'
+import endThree from '../../../assets/sound/achi/endThree.m4a'
+
 
 function AchiLesson5(){
 
 const woodTap = useRef(new Audio(woodTapSound))
 const victory = useRef(new Audio(VictorySound))
+const voiceRef = useRef(new Audio());
+
 const thinking = "..."
 
 const playWoodTap = () => {
@@ -34,18 +41,18 @@ const playVictory = () => {
  const steps = [{
         step: '1',
         text: "A player wins immediately by forming a straight line with all three of their pieces. The line may be horizontal, vertical, or diagonal.",
-        voice: 'Foolish boy Siaw'
+        voice: endOne
 
 
     },{
        step: '2',
         text: "The game ends as soon as a winning line is formed, even if the other player would have had a winning move on their next turn.",
-        voice: 'Foolish boy Siaw'
+        voice: endTwo
 
     },{
         step: '3',
         text: "After the game ends, reset the board by removing all six pieces so a new game can begin.",
-        voice: 'Foolish boy Siaw'
+        voice: endThree
 
     } ]
 
@@ -89,6 +96,7 @@ const goForward = () => {
     }
 
     const nextLessonNavigation = () => {
+        playWoodTap()
         if (nextLesson){
             navigate('/achilesson6')
         } else {
@@ -106,6 +114,7 @@ const goForward = () => {
     }
 
     const PreviousLessonNavigation = () => {
+        playWoodTap()
         if (previousLessonVariable){
             navigate('/achilesson4')
         } else {
@@ -119,6 +128,24 @@ const goForward = () => {
         PreviousLesson()
         resetWin()
     }, [currentStep])
+
+    useEffect (() =>{
+    const audio = voiceRef.current; 
+
+    audio.src = steps[currentStep].voice; 
+    audio.currentTime = 0; 
+    
+    audio.play().catch(() =>{
+
+    })
+
+    return () =>{
+        audio.pause(); 
+        audio.currentTime = 0;
+    }
+
+}, [currentStep])
+
 
 
 

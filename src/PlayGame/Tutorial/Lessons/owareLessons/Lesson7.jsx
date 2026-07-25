@@ -143,6 +143,7 @@ const [currentStep, setCurrentStep] = useState(0)
     }, [currentStep])
 
      const nextLessonNavigation = () => {
+        playWoodTap()
         if (nextLesson){
             navigate('/selectionScreen')
         } else {
@@ -153,6 +154,7 @@ const [currentStep, setCurrentStep] = useState(0)
 
     
     const PreviousLesson = () => {
+        playWoodTap()
         if(currentStep === 0){
             setPreviousLessonVariable(true)
         } else {
@@ -161,12 +163,14 @@ const [currentStep, setCurrentStep] = useState(0)
     }
 
     const PreviousLessonNavigation = () => {
+        playWoodTap()
         if (previousLessonVariable){
             navigate('/owarelesson5')
         } else {
             previousStep()
         }
     }
+    
 
     useEffect (() =>{
         const audio = voiceRef.current; 

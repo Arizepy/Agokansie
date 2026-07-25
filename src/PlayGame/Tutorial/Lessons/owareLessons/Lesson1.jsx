@@ -42,6 +42,14 @@ const steps = [{
 
     } ]
 
+    const playWoodTap = () => {
+    if (woodTap.current){
+        woodTap.current.currentTime = 0;
+        woodTap.current.volume = 0.1
+        woodTap.current.play()
+    }
+}
+
 
 
 //Navigation
@@ -87,6 +95,7 @@ useEffect(() => {
 }, [currentStep])
 
 const nextLessonNavigation = () => {
+    playWoodTap()
     if (nextLesson){
         navigate('/owarelesson2')
     } 
@@ -203,7 +212,9 @@ for (let pit = 0; pit < PIT_COUNT; pit++) {
         });
 
         pieceSound.current.currentTime = 0;
+        pieceSound.current.volume = 0.01
         pieceSound.current.play();
+        
     });
 
     tl.to({}, { duration: 0.15 }); // brief beat before the next pit starts filling
