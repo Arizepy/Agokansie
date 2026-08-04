@@ -15,7 +15,7 @@ import { gsap } from 'gsap'
 import tipsOne from '../../../assets/sound/dame/tipsOne.m4a'
 import tipsTwo from '../../../assets/sound/dame/tipsTwo.m4a'
 import tipsThree from '../../../assets/sound/dame/tipsThree.m4a'
-import tipsFour from '../../../assets/sound/dame/tipsFOur.m4a'
+import tipsFour from '../../../assets/sound/dame/tipsFour.m4a'
 
 
 export default  function DameLesson6(){

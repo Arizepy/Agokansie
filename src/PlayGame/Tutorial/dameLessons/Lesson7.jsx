@@ -12,7 +12,7 @@ import Victory from '../../../assets/sound/victory.mp3'
 import { gsap } from 'gsap'
 
 //Lesson sound 
-import endOne from '../../../assets/sound/dame/endOne.m4ae'
+import endOne from '../../../assets/sound/dame/endOne.m4a'
 import endTwo from '../../../assets/sound/dame/endTwo.m4a'   
 import endThree from '../../../assets/sound/dame/endThree.m4a'
 import endFour from '../../../assets/sound/dame/endFour.m4a'
