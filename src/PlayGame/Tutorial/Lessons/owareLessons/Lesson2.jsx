@@ -1,6 +1,7 @@
 import { useContext, useState, useRef, useEffect, } from 'react'
 import PageWrapper from '../../../../WelcomeScreen/PageWrapper'
 import bg from '../../../../assets/background-collage.png'
+import { useLanguage } from '../../../../context/languageContext'
 import thinking_image  from '../../../../assets/black_man_thinking.webp'
 import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
@@ -11,33 +12,37 @@ import soundOne from '../../../../assets/sound/oware/rulesOne.m4a'
 import soundTwo from '../../../../assets/sound/oware/rulesTwo.m4a'
 import soundThree from '../../../../assets/sound/oware/rulesThree.m4a'
 import soundFour from '../../../../assets/sound/oware/rulesFour.m4a'
+import engSoundOne from '../../../../assets/sound/oware/OwareLessonTwoStepOne.mp3'
+import engSoundTwo from '../../../../assets/sound/oware/OwareLessonTwoStepTwo.mp3'
+import engSoundThree from '../../../../assets/sound/oware/OwareLessonTwoStepThree.mp3'
+import engSoundFour from '../../../../assets/sound/oware/OwareLessonTwoStepFour.mp3'
+
 
 export default function OwareLesson2(){
-
 const woodTap = useRef(new Audio(woodTapSound))
 const voiceRef = useRef(new Audio());
-
+const {language} = useLanguage()
 const thinking = "..."
 
 const steps = [{
         step: '1',
         text: "Handle all the beads with care throughout the game. Rough handling may cause the pieces to scatter or become misplaced, making it difficult for the game to continue smoothly.",
-        voice: soundOne
+        voice: language === 'english' ? engSoundOne: soundOne
 
     },{
         step: '2',
         text: "For your safety, never place your hand or any object in the robot's path while it is moving across the board. Wait until the robot has completely finished its move before interacting with the game.",
-        voice: soundTwo
+        voice: language === 'english' ? engSoundTwo : soundTwo
 
     },{
         step: '3',
         text: "Whenever you capture beads, place them neatly into your designated container pod. Keeping captured beads separate makes it easier to determine the winner at the end of the game.",
-        voice: soundThree
+        voice: language === 'english' ? engSoundThree :soundThree
 
     },{
         step: '4',
         text: "Always wait for the robot or your opponent to complete their turn before touching the board. Never move pieces early or interfere with another player's turn, as this would be cheating and could affect the outcome of the game.",
-        voice: soundThree
+        voice: language === 'english' ? engSoundFour : soundFour
 
     } ]
 

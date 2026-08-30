@@ -5,6 +5,7 @@ import bg from '../../../../assets/background-collage.png'
 import thinking_image  from '../../../../assets/black_man_thinking.webp'
 import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from '../../../../context/languageContext'
 import woodTapSound from '../../../../assets/sound/woodTap.mp3'
 import placePiece from '../../../../assets/sound/piecePlacement.mp3'
 import Hightlight from '../../../../assets/sound/blocked.mp3'
@@ -16,6 +17,12 @@ import soundOne from '../../../../assets/sound/oware/captureOne.m4a'
 import soundTwo from '../../../../assets/sound/oware/captureTwo.m4a'
 import soundThree from '../../../../assets/sound/oware/captureThree.m4a'
 import soundFour from '../../../../assets/sound/oware/captureFour.m4a'
+import engSoundOne from '../../../../assets/sound/oware/OwareLessonFiveStepOne.mp3'
+import engSoundTwo from '../../../../assets/sound/oware/OwareLessonFiveStepTwo.mp3'
+import engSoundThree from '../../../../assets/sound/oware/OwareLessonFiveStepThree.mp3'
+import engSoundFour from '../../../../assets/sound/oware/OwareLessonFiveStepFour.mp3'
+
+
 
 
 export default function OwareLesson5(){
@@ -27,6 +34,7 @@ const pieceSound = useRef(new Audio(placePiece))
 const hightlight  = useRef(new Audio(Hightlight))
 const error = useRef (new Audio(errorSound))
 const victory = useRef(new Audio(victorySound))
+const {language} = useLanguage()
 
 const voiceRef = useRef(new Audio());
 
@@ -74,22 +82,22 @@ const playWoodTap = () => {
 const steps = [{
         step: '1',
         text: "You can capture seeds when your final seed lands in your opponent's territory and creates exactly four seeds in that pit.",
-        voice: soundOne
+        voice: language === 'english'? engSoundOne :soundOne
 
     },{
         step: '2',
         text: "Captured seeds should immediately be removed from the board and placed into your collection container.",
-        voice: soundTwo
+        voice: language=== 'english' ? engSoundTwo : soundTwo
 
     },{
         step: '3',
         text: "Capturing is only allowed in your own territory. Seeds that form four in your opponent's territory cannot be captured.",
-        voice: soundThree
+        voice: language === 'english' ? engSoundThree : soundThree
 
     },{
         step: '4',
         text: "Keep careful track of every captured seed, as the player with the most captured seeds at the end of the game wins.",
-        voice: soundFour
+        voice: language === 'english' ?engSoundFour : soundFour
 
     } ]
 

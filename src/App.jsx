@@ -1,10 +1,15 @@
-import {useRef} from 'react'
+import {useEffect, useRef,useState} from 'react'
+import { LanguageProvider } from './context/languageContext.jsx'
+import { AudioSettingsProvider } from './context/audioSettingsContext.jsx'
 import WelcomeScreen from './WelcomeScreen/Welcome.jsx'
 import SelectionScreen from './WelcomeScreen/SelectionScreen.jsx'
 import OwareGame from './PlayGame/startGame.jsx'
 import DameGame from './PlayGame/DameScreen.jsx'
 import AchiGame from './PlayGame/AchiGameScreen.jsx'
 import BackgroundMusic from './assets/sound/bg.m4a'
+import BackgroundMusicTwo from './assets/sound/bg2.mp3'
+import BackgroundMusicThree from './assets/sound/bg3.mp3'
+import BackgroundMusicFour from './assets/sound/bg4.mp3'
 import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import OwareLesson from './PlayGame/Tutorial/OwareLessonScreen.jsx'
@@ -37,20 +42,43 @@ import AchiLesson5 from './PlayGame/Tutorial/achiLessons/Lesson5.jsx'
 import AchiLesson6 from './PlayGame/Tutorial/achiLessons/Lesson6.jsx'
 
 
+const backgroundSongs =[BackgroundMusic, BackgroundMusicTwo, BackgroundMusicThree,BackgroundMusicFour]
+function getRandomSong(excludeSong){
+    if (backgroundSongs.length === 1) return backgroundSongs[0]
+    let next = backgroundSongs[Math.floor(Math.random() * backgroundSongs.length)]
 
+    while (next === excludeSong){
+        next = backgroundSongs[Math.floor(Math.random() * backgroundSongs.length)]
+    }
+    return next
+}
 
 function AnimatedRoutes(){
     const location = useLocation()
     const audioRef = useRef(null)
+    const [currentSong, setCurrentSong] = useState(() => getRandomSong(null))
+    const [musicStarted, setMusicStarted] = useState(false)
+
+
 
     const startMusic = () => {
-        audioRef.current.play()
-        audioRef.current.volume = 0.05
+      setMusicStarted(true)
+    }
+
+    useEffect(() => {
+        if (!musicStarted) return
+        audioRef.current.volume = 0.4
+        audioRef.current.play().catch(err => console.error('Audio play failed:', err))
+
+    }, [musicStarted, currentSong])
+
+    const handleSongEnd = () =>{
+        setCurrentSong(prev => getRandomSong(prev))
     }
 
     return(
         <>
-        <audio ref={audioRef} src={BackgroundMusic} loop/>  
+        <audio ref={audioRef} src={currentSong} onEnded={handleSongEnd}/>  
         <AnimatePresence mode='wait'>
             <Routes location={location} key={location.pathname}>
                 <Route path='/' element={<WelcomeScreen music={startMusic}/>}/>
@@ -100,11 +128,13 @@ function AnimatedRoutes(){
 function App(){
    
     return (
-
-        <BrowserRouter>
-          <AnimatedRoutes/>
-        </BrowserRouter>    
-
+        <AudioSettingsProvider>
+            <LanguageProvider>
+                <BrowserRouter>
+                <AnimatedRoutes/>
+                </BrowserRouter>    
+            </LanguageProvider>
+        </AudioSettingsProvider>
     )
 }
 

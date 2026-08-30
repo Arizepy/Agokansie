@@ -1,5 +1,6 @@
 import { useContext, useState, useRef, useEffect, } from 'react'
 import { gsap } from 'gsap'
+import { useLanguage } from '../../../../context/languageContext'
 import PageWrapper from '../../../../WelcomeScreen/PageWrapper'
 import bg from '../../../../assets/background-collage.png'
 import thinking_image  from '../../../../assets/black_man_thinking.webp'
@@ -14,6 +15,11 @@ import stepOneAudio from '../../../../assets/sound/oware/sowingOne.m4a'
 import stepTwoAudio from '../../../../assets/sound/oware/sowingTwo.m4a'
 import stepThreeAudio from '../../../../assets/sound/oware/sowingThree.m4a'
 import stepFourAudio from '../../../../assets/sound/oware/sowingFour.m4a'
+import engStepOneAudio from '../../../../assets/sound/oware/OwareLessonFourStepOne.mp3'
+import engStepTwoAudio from '../../../../assets/sound/oware/OwareLessonFourStepTwo.mp3'
+import engStepThreeAudio from '../../../../assets/sound/oware/OwareLessonFourStepThree.mp3'
+import engStepFourAudio from '../../../../assets/sound/oware/OwareLessonFourStepFour.mp3'
+
 
 
 export default function OwareLesson4(){
@@ -22,6 +28,7 @@ export default function OwareLesson4(){
 const woodTap = useRef(new Audio(woodTapSound))
 const pieceSound = useRef(new Audio(placePiece))
 const hightlight  = useRef(new Audio(Hightlight))
+const {language} = useLanguage()
 
 const playPlacePiece = () => {
     if (pieceSound.current){
@@ -53,22 +60,22 @@ const voiceRef = useRef(new Audio());
 const steps = [{
         step: '1',
         text: "Players take turns making moves. On your turn, choose one pit from your own territory and pick up every seed from that pit.",
-        voice: stepOneAudio
+        voice: language === 'english' ? engStepOneAudio :stepOneAudio
 
     },{
         step: '2',
         text: "Moving in a counter-clockwise direction, place one seed into each pit until you have distributed all the seeds in your hand.",
-        voice: stepTwoAudio
+        voice: language === 'english' ? engStepTwoAudio : stepTwoAudio
 
     },{
         step: '3',
         text: "If your final seed lands in a pit that already contains other seeds, pick up all the seeds from that pit and continue sowing. This process may repeat several times during the same turn.",
-        voice: stepThreeAudio
+        voice: language === 'english' ? engStepThreeAudio : stepThreeAudio
 
     },{
         step: '4',
         text: "If your final seed lands in an empty pit, your turn ends immediately and play passes to your opponent. If your opponent has no seeds remaining, you must make a move that gives them seeds so the game can continue.",
-        voice: stepFourAudio
+        voice: language === 'english' ? engStepFourAudio : stepFourAudio
 
     } ]
 

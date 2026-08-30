@@ -1,4 +1,5 @@
 import { useContext, useState, useRef, useEffect, } from 'react'
+import { useLanguage } from '../../../context/languageContext'
 import PageWrapper from '../../../WelcomeScreen/PageWrapper'
 import bg from '../../../assets/background-collage.png'
 import thinking_image  from '../../../assets/black_man_thinking.webp'
@@ -12,10 +13,16 @@ import rulesTwo from '../../../assets/sound/achi/rulesTwo.m4a'
 import rulesThree from '../../../assets/sound/achi/rulesThree.m4a'
 import rulesFour from '../../../assets/sound/achi/rulesFour.m4a'
 
+import engRulesOne from '../../../assets/sound/achi/AchiLessonTwoStepOne.mp3'
+import engRulesTwo from '../../../assets/sound/achi/AchiLessonTwoStepTwo.mp3'
+import engRulesThree from '../../../assets/sound/achi/AchiLessonTwoStepThree.mp3'
+import engRulesFour from '../../../assets/sound/achi/AchiLessonTwoStepFour.mp3'
+
+
 
 
 function AchiLesson2(){
-
+const {language} = useLanguage()
 const woodTap = useRef(new Audio(woodTapSound))
 const voiceRef = useRef(new Audio());
 
@@ -24,22 +31,22 @@ const thinking = "..."
 const steps = [{
         step: '1',
         text: "Handle all playing pieces carefully when placing or moving them. Damaged or misplaced pieces may affect the robot's ability to detect and play the game correctly.",
-        voice: rulesOne
+        voice: language === 'english' ? engRulesOne : rulesOne
 
     },{
         step: '2',
         text: "Keep your hands away from the board whenever the robot is making its move. Wait until the robot has completely stopped before touching any piece on the board.",
-        voice: rulesTwo
+        voice: language === 'english' ? engRulesTwo : rulesTwo
 
     },{
         step: '3',
         text: "Move only the piece selected for your turn. Do not adjust, rotate, or reposition any other pieces unless instructed by the game.",
-        voice: rulesThree
+        voice: language === 'english' ? engRulesThree : rulesThree
 
     },{
         step: '4',
         text: "Respect the robot's turn and your opponent's turn at all times. Do not interrupt gameplay or interfere with the robot's movements, as doing so may affect the game's accuracy.",
-        voice: rulesFour
+        voice: language === 'english' ? engRulesFour : rulesFour
 
     } ]
 const playWoodTap = () => { 

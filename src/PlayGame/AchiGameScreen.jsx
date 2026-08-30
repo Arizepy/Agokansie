@@ -2,6 +2,7 @@ import { useContext, useState, useRef, useEffect, } from 'react'
 import PageWrapper from '../WelcomeScreen/PageWrapper'
 import { GameContext } from '../context/GameContext'
 import thinking_image  from '../assets/black_man_thinking.webp'
+import { useLanguage } from '../context/languageContext'
 import bg from '../assets/background-collage.png'
 import woodTapSound from '../assets/sound/woodTap.mp3'
 import { useNavigate } from "react-router-dom"; 
@@ -16,9 +17,16 @@ import costYou from '../assets/sound/bad_move/costYou.m4a'
 import leaveOpening from '../assets/sound/bad_move/leaveOpening.m4a'
 import myFavor from '../assets/sound/bad_move/myFavor.m4a'
 import whereItLeads from '../assets/sound/bad_move/whereItLeads.m4a'
+import engBestOption from '../assets/sound/bad_move/bestOption.mp3'
+import engCostYou from '../assets/sound/bad_move/costYou.mp3'
+import engLeaveOpening from '../assets/sound/bad_move/leavesOpening.mp3'
+import engMyFavour from '../assets/sound/bad_move/myFavour.mp3'
+import engWhereItLeads from '../assets/sound/bad_move/whereItLeads.mp3'
 
 {/**EndGame */}
 import finalStage from '../assets/sound/endGame/finalStage.m4a'
+import engFinalStage from '../assets/sound/endGame/enteringFinalStage.mp3'
+
 
 {/**Great move */}
 import cleverMove from '../assets/sound/great_move/cleverMove.m4a'
@@ -26,16 +34,28 @@ import excellentChoice from '../assets/sound/great_move/excellentChoice.m4a'
 import nicelyPlayed from '../assets/sound/great_move/nicelyPlayed.m4a'
 import severalMoves from '../assets/sound/great_move/severalMoves.m4a'
 import underPressure from '../assets/sound/great_move/underPressure.m4a'
+import engCleverMove from '../assets/sound/great_move/cleverMove.mp3'
+import engExcellentChoice from '../assets/sound/great_move/excellentChoice.mp3'
+import engNicelyPlayed from '../assets/sound/great_move/nicelyPlayed.mp3'
+import engSeveralMoves from '../assets/sound/great_move/severalMoves.mp3'
+import engUnderPressure from '../assets/sound/great_move/underPressure.mp3'
+
 
 {/**Invalid move */}
 import anotherMove from '../assets/sound/invalid_move/anotherMove.m4a'
 import breaksRules from '../assets/sound/invalid_move/breaksRules.m4a'
+import engAnotherMove from '../assets/sound/invalid_move/anotherMove.mp3'
+import engBreaksRules from '../assets/sound/invalid_move/breaksRules.mp3'
 
 {/**Player captures seeds */}
 import didNotExpect from '../assets/sound/player_captures_seeds/didNotExpect.m4a'
 import foundOpening from '../assets/sound/player_captures_seeds/foundOpening.m4a'
 import goodCapture from '../assets/sound/player_captures_seeds/goodCapture.m4a'
 import nicelyExecuted from '../assets/sound/player_captures_seeds/nicelyExecuted.m4a'
+import engFoundOpening from '../assets/sound/player_captures_seeds/foundAnOpening.mp3'
+import engGoodCapture from '../assets/sound/player_captures_seeds/goodCapture.mp3'
+import engNicelyExecuted from '../assets/sound/player_captures_seeds/nicelyExecuted.mp3'
+import engWellDone from '../assets/sound/player_captures_seeds/wellDone.mp3'
 
 
 {/**Player wins */}
@@ -43,6 +63,11 @@ import excellentGame from '../assets/sound/player_wins/excellentGame.m4a'
 import tillNextgame from '../assets/sound/player_wins/tillNextGame.m4a'
 import wellDeserved from '../assets/sound/player_wins/wellDeserved.m4a'
 import wellDone from '../assets/sound/player_wins/wellDone.m4a'
+import engExcellentGame from '../assets/sound/player_wins/excellentGame.mp3'
+import engPlayAgain from '../assets/sound/player_wins/playAgain.mp3'
+import engTillNextTime from '../assets/sound/player_wins/tillNextGame.mp3'
+import engWellDeserved from '../assets/sound/player_wins/wellDeserved.mp3'
+
 
 {/**robot_captured_seed */}
 import opportunity from '../assets/sound/robot_captures_seeds/opportunity.m4a'
@@ -50,11 +75,22 @@ import seedCounts from '../assets/sound/robot_captures_seeds/seedCounts.m4a'
 import takingSeeds from '../assets/sound/robot_captures_seeds/takingSeeds.m4a'
 import usefulHarvest from '../assets/sound/robot_captures_seeds/usefulHarvest.m4a'
 import workedWell from '../assets/sound/robot_captures_seeds/workedWell.m4a'
+import engEverySeedCounts from '../assets/sound/robot_captures_seeds/everySeedCounts.mp3'
+import engTakingSeeds from '../assets/sound/robot_captures_seeds/takeThoseSeeds.mp3'
+import engUsefulHarvest from '../assets/sound/robot_captures_seeds/usefulHarvest.mp3'
+import engOpportunity from '../assets/sound/robot_captures_seeds/thanksForOpportunity.mp3'
+import engWorkedWell from '../assets/sound/robot_captures_seeds/workedWell.mp3'
+import engDidNotExpect from '../assets/sound/player_captures_seeds/didNotExpect.mp3'
+
 
 {/**Robot wins */}
 import enjoyable from '../assets/sound/robot_wins/enjoyable.m4a'
 import playedWell from '../assets/sound/robot_wins/playedWell.m4a'
 import victoryMine from '../assets/sound/robot_wins/victoryMine.m4a'
+import engEnjoyable from '../assets/sound/robot_wins/wasEnjoyable.mp3'
+import engPlayedWell from '../assets/sound/robot_wins/playedWell.mp3'
+import engVictoryMine from '../assets/sound/robot_wins/victoryMine.mp3'
+
 
 {/**Welcome */}
 import boardReady from '../assets/sound/welcome/boardReady.m4a'
@@ -62,36 +98,44 @@ import enjoyableGame from '../assets/sound/welcome/enjoyGame.m4a'
 import goodLuck from '../assets/sound/welcome/goodLuck.m4a'
 import shallWeBegin from '../assets/sound/achi/introOne.m4a'
 import strategistWin from '../assets/sound/welcome/strategistWin.m4a'
+import engBoardReady from '../assets/sound/welcome/boardReady.mp3'
+import engEnjoyableGame from '../assets/sound/welcome/engAchiEnjoyableGame.mp3'
+import engGoodLuck from '../assets/sound/welcome/goodLuck.mp3'
+import engShallWeBegin from '../assets/sound/welcome/shallWeBegin.mp3'
+import engStrategistWins from '../assets/sound/welcome/strategistWin.mp3'
 
 
 import { API } from './API'
+import { AudioSettingsContext } from '../context/audioSettingsContext'
+import { useVoicePlayer, useSfxPlayer } from '../hooks/useVoicePlayer'
 
 
 function AchiGame(){
-    
-    
-
+    const [gameDifficulty, setGameDifficulty] = useState(0)
+    const {language} = useLanguage()
+    const { musicVolume, setMusicVolume, sfxVolume, setSfxVolume } = useContext(AudioSettingsContext)
+    const playVoice = useVoicePlayer(musicVolume)
     const useRobotCaputureSeedResponses = () => {
         const RobotCaptureSeedResponses = [
             {
                 text: "I'll take those seeds",
-                voice: takingSeeds
+                voice: language === 'english' ? engTakingSeeds : takingSeeds
             },
             {
                 text: "A useful harvest",
-                voice: usefulHarvest
+                voice: language === 'english' ? engUsefulHarvest : usefulHarvest
             },
             {
                 text: "That worked out well for me",
-                voice: workedWell
+                voice: language === 'english' ? engWorkedWell : workedWell
             },
             {
                 text: "Every seed counts",
-                voice: seedCounts
+                voice: language === 'english' ? engEverySeedCounts : seedCounts
             },
             {
                 text: "Thank you for the opportunity",
-                voice: opportunity
+                voice: language === 'english' ? engOpportunity : opportunity
             },
         ]
 
@@ -99,31 +143,30 @@ function AchiGame(){
             const selectedResponse = RobotCaptureSeedResponses[responseIndex]
             setResponse(selectedResponse.text)
 
-            const voiceover = new Audio(selectedResponse.voice)
-            voiceover.play()
+            playVoice(selectedResponse.voice)
     }
 
     const usePlayerCaputureSeedResponses = () => {
         const RobotCaptureSeedResponses = [
             {
                 text: "Well done",
-                voice: wellDone
+                voice: language === 'english' ? engWellDone : wellDone
             },
             {
                 text: "You found the opening",
-                voice: foundOpening
+                voice: language === 'english' ? engFoundOpening: foundOpening
             },
             {
                 text: "That was a good capture",
-                voice: goodCapture
+                voice: language==='english' ? engGoodCapture : goodCapture
             },
             {
                 text: "I didn't expect that",
-                voice: didNotExpect
+                voice: language === 'english' ? engDidNotExpect : didNotExpect
             },
             {
                 text: "Nicely executed",
-                voice: nicelyExecuted
+                voice: language === 'english' ? engNicelyExecuted : nicelyExecuted
             },
         ]
 
@@ -131,19 +174,18 @@ function AchiGame(){
             const selectedResponse = RobotCaptureSeedResponses[responseIndex]
             setResponse(selectedResponse.text)
 
-            const voiceover = new Audio(selectedResponse.voice)
-            voiceover.play()
+            playVoice(selectedResponse.voice)
     }
 
     const useRobotWinsResponses = () => {
         const RobotWinsResponses = [
             {
                 text: "Good game. That was enjoyable",
-                voice: enjoyableGame
+                voice: language === 'english'? engEnjoyable :enjoyableGame
             },
             {
                 text: "Victory is mine this time",
-                voice: victoryMine
+                voice: language === 'english' ? engVictoryMine: victoryMine
             },
         
         ]
@@ -152,27 +194,26 @@ function AchiGame(){
             const selectedResponse = RobotWinsResponses[responseIndex]
             setResponse(selectedResponse.text)
 
-            const voiceover = new Audio(selectedResponse.voice)
-            voiceover.play()
+            playVoice(selectedResponse.voice)
     }
 
     const usePlayerWinsResponses = () => {
         const playerWinsResponses = [
             {
                 text: "Well deserved. You win",
-                voice: wellDeserved
+                voice: language === 'english' ? engWellDeserved: wellDeserved
             },
             {
                 text: "Excellent game. I enjoyed that",
-                voice: excellentGame
+                voice: language === 'english' ? engExcellentGame: excellentGame
             },
             {
                 text: "Until our next game",
-                voice: tillNextgame
+                voice: language=== 'english' ? engTillNextTime: tillNextgame
             },
             {
                 text: "Congratulations. You played very well",
-                voice: wellDone
+                voice: language === 'english' ? engPlayedWell : playedWell
             },
             
         ]
@@ -181,8 +222,7 @@ function AchiGame(){
             const selectedResponse = playerWinsResponses[responseIndex]
             setResponse(selectedResponse.text)
 
-            const voiceover = new Audio(selectedResponse.voice)
-            voiceover.play()
+            playVoice(selectedResponse.voice)
     }
 
 
@@ -190,12 +230,11 @@ function AchiGame(){
         const useEndGameResponses = [
            {
             text:"We're entering the final stage",
-            voice: finalStage
+            voice: language === 'english' ?engFinalStage:finalStage
            }
         ]
             setResponse(useEndGameResponses[0].text)
-            const voiceover = new Audio(useEndGameResponses[0].voice)
-            voiceover.play()
+            playVoice(useEndGameResponses[0].voice)
     }
 
 
@@ -218,7 +257,7 @@ function AchiGame(){
     const [getReward, setGetReward] = useState(true)
 
 
-   const woodTap = useRef(new Audio(woodTapSound))
+   const playWoodTap = useSfxPlayer(woodTapSound, sfxVolume)
 
     const postRequest = async () => {
             try {
@@ -336,20 +375,17 @@ function AchiGame(){
         getStatus()
         
 
-        woodTap.current.currentTime = 0
-        woodTap.current.play()
+        playWoodTap()
     }  
     
     const goBack = () => {
             navigate(-1)
-            woodTap.current.currentTime = 0
-            woodTap.current.play()
+            playWoodTap()
         }
 
         const goForward = () => {
             navigate(1)
-            woodTap.current.currentTime = 0
-            woodTap.current.play()
+            playWoodTap()
         }
 
         const [pit, setPit] = useState('')
@@ -378,6 +414,13 @@ function AchiGame(){
         // }
 
         
+    const resetFxn = () => { 
+        setMusicVolume(0.7)
+        setSfxVolume(0.5)
+        setGameDifficulty(2)
+
+    }
+
         const [displayScreen, setDisplayScreen] = useState(false)
         const toggleSettingScreen = () => {
             setDisplayScreen(!displayScreen)
@@ -390,24 +433,24 @@ function AchiGame(){
         const useWelcomeResponses = () => {
         const welcomeResponses = [
             {
-                text: "Welcome, Let's enjoy a game of Oware",
-                voice: enjoyableGame
+                text: "Welcome, Let's enjoy a game of Achi",
+                voice: language === 'english' ?engEnjoyableGame :enjoyableGame
             },
             {
                 text: "The Board is ready. Your move",
-                voice: boardReady
+                voice: language === 'english'? engBoardReady : boardReady
             },
             {
                 text: "Good luck. Let's see what you've got",
-                voice: goodLuck
+                voice: language === 'english' ? engGoodLuck : goodLuck
             },
             {
                 text: "Everything is set. Shall we begin?",
-                voice: shallWeBegin
+                voice: language === 'english' ? engShallWeBegin : shallWeBegin
             },
             {
                 text: "May the best strategist win",
-                voice: strategistWin
+                voice: language === 'english' ? engStrategistWins : strategistWin
             },
         ]
 
@@ -415,8 +458,7 @@ function AchiGame(){
             const selectedResponse = welcomeResponses[responseIndex]
             setResponse(selectedResponse.text)
 
-            const voiceover = new Audio(selectedResponse.voice)
-            voiceover.play()
+            playVoice(selectedResponse.voice)
     }
 
     useEffect(() => {
@@ -428,23 +470,23 @@ function AchiGame(){
         const greatMoveResponses = [
             {
                 text: "That was a clever move",
-                voice: cleverMove
+                voice: language === 'english' ? engCleverMove : cleverMove
             },
             {
                 text: "Nicely played",
-                voice: nicelyPlayed
+                voice: language === 'english' ? engNicelyPlayed : nicelyPlayed
             },
             {
                 text: "You've put me under pressure",
-                voice: underPressure
+                voice: language === 'english' ? engUnderPressure : underPressure
             },
             {
                 text: "Excellent choice",
-                voice: excellentChoice
+                voice: language === 'english' ? engExcellentChoice : excellentChoice
             },
             {
                 text: "You're thinking several moves ahead",
-                voice: severalMoves
+                voice: language === 'english' ? engSeveralMoves : severalMoves
             },
         ]
 
@@ -452,31 +494,30 @@ function AchiGame(){
             const selectedResponse = greatMoveResponses[responseIndex]
             setResponse(selectedResponse.text)
 
-            const voiceover = new Audio(selectedResponse.voice)
-            voiceover.play()
+            playVoice(selectedResponse.voice)
     }
 
     const useBadMoveResponses = () => {
         const badMoveResponses = [
             {
                 text: "That may cost you later",
-                voice: costYou
+                voice: language === 'english' ? engCostYou : costYou
             },
             {
                 text: "Be careful.That leaves an opening",
-                voice: leaveOpening
+                voice: language === 'english' ? engLeaveOpening : leaveOpening
             },
             {
                 text: "I'm not sure that was you best option",
-                voice: bestOption
+                voice: language === 'english' ? engBestOption : bestOption
             },
             {
                 text: "Interesting... let's see where that leads",
-                voice: whereItLeads
+                voice: language === 'english' ? engWhereItLeads : whereItLeads
             },
             {
                 text: "That changes the game in my favor",
-                voice: myFavor
+                voice: language === 'english' ? engMyFavour : myFavor
             },
         ]
 
@@ -484,8 +525,7 @@ function AchiGame(){
             const selectedResponse = badMoveResponses[responseIndex]
             setResponse(selectedResponse.text)
 
-            const voiceover = new Audio(selectedResponse.voice)
-            voiceover.play()
+            playVoice(selectedResponse.voice)
 
     }
 
@@ -496,7 +536,9 @@ function AchiGame(){
     const [winner, setWinner] = useState('')
     const [victor, setVictor] = useState('')
 
-     
+    const lastHandledStatus = useRef(null)
+    const lastHandledVictor = useRef(null)
+
     useEffect(() => {
 
         // if (boardState?.state?.ratings === 0) {
@@ -506,52 +548,72 @@ function AchiGame(){
         // }
 
         setRobotStatus(boardState?.state?.status)
-        console.log(robotStatus)
 
         setGameOver(boardState?.state?.game_over)
-        console.log(gameOver)   
 
-        if(status === 'error' || status === 'invalid_move'){
+        const isInvalid = status === 'error' || status === 'invalid_move'
+
+        if (isInvalid && lastHandledStatus.current !== status) {
             useInvalidMoveResponses()
         }
 
-        // if (gameOver && playerScore > robotScore) {
-        //     setWinner('You Win')
-        //     usePlayerWinsResponses()
-        // } else if (gameOver && playerScore == robotScore ){
-        //     setWinner("It's a Draw")
-        // } else if (gameOver && robotScore > playerScore ) {
-        //     setWinner('Agokansie wins!'); 
-        //     setAgokansieWins(true)
-        //     useRobotWinsResponses();
-        // }
+        if (!isInvalid) {
+            lastHandledStatus.current = null
+        } else {
+            lastHandledStatus.current = status
+        }
 
         setVictor(boardState?.state?.winner)
 
     },[boardState, status])
 
+
+    {/**Game difficulty post request */}
+
+// useEffect(() =>{
+//    const  handleDifficulty = async () => {
+//     const response = await fetch(`${API}/someThing`, {
+//         method : 'POST',
+//         headers : {
+//             'Content-Type' : 'application/json'
+//         },
+//         body : JSON.stringify({gameDifficulty})
+//     })
+//    }
+//     },[gameDifficulty]) 
+
+
     useEffect (()=>{
-    if (gameOver && victor === 'player' ){ 
-        setWinner('You win!'); 
-        setPlayerWins(true)
-        usePlayerWinsResponses();
-    }
-    else if (gameOver && victor === 'robot') {
-        setWinner('Agokansie wins!'); 
-        setAgokansieWins(true)
-        useRobotWinsResponses();
-    }
-}, [victor])
+        if (!gameOver) {
+            lastHandledVictor.current = null
+            return
+        }
+
+        if (lastHandledVictor.current === victor) return
+
+        if (victor === 'player' ){
+            setWinner('You win!');
+            setPlayerWins(true)
+            usePlayerWinsResponses();
+            lastHandledVictor.current = victor
+        }
+        else if (victor === 'robot') {
+            setWinner('Agokansie wins!');
+            setAgokansieWins(true)
+            useRobotWinsResponses();
+            lastHandledVictor.current = victor
+        }
+    }, [gameOver, victor])
 
     const useInvalidMoveResponses = () => {
         const invalidMovesResponses = [
             {
                 text: "That move breaks the rules",
-                voice: breaksRules
+                voice: language === 'english' ? engBreaksRules : breaksRules
             },
             {
                 text: "Please choose another move",
-                voice: anotherMove
+                voice: language === 'english' ? engAnotherMove : anotherMove
             }
         ]
 
@@ -559,15 +621,13 @@ function AchiGame(){
             const selectedResponse = invalidMovesResponses[responseIndex]
             setResponse(selectedResponse.text)
 
-            const voiceover = new Audio(selectedResponse.voice)
-            voiceover.play()
+            playVoice(selectedResponse.voice)
     }
 
 
     const BackToHome = () => {
         navigate('/')
-        woodTap.current.currentTime = 0
-        woodTap.current.play()
+        playWoodTap()
     }
 
     const getLineStyle = (start, end) => {
@@ -781,11 +841,14 @@ const LINES = [
 
                 <input
                   type="range"
-                  defaultValue={70}
+                  min={0}
+                  max={100}
+                  value={Math.round(musicVolume * 100)}
+                  onChange={(e) => setMusicVolume(Number(e.target.value) / 100)}
                   className="flex-1 accent-sky-500"
                 />
 
-                <span>70%</span>
+                <span>{Math.round(musicVolume * 100)}%</span>
 
               </div>
 
@@ -799,11 +862,14 @@ const LINES = [
 
                 <input
                   type="range"
-                  defaultValue={60}
+                  min={0}
+                  max={100}
+                  value={Math.round(sfxVolume * 100)}
+                  onChange={(e) => setSfxVolume(Number(e.target.value) / 100)}
                   className="flex-1 accent-sky-500"
                 />
 
-                <span>60%</span>
+                <span>{Math.round(sfxVolume * 100)}%</span>
 
               </div>
 
@@ -813,7 +879,7 @@ const LINES = [
 
           {/* ---------------- GAMEPLAY ---------------- */}
 
-          <section>
+           <section>
 
             <div className="flex items-center gap-3 mb-5">
 
@@ -833,50 +899,28 @@ const LINES = [
 
               <div className="flex items-center">
 
-                <label className="w-36">
+                <label className="w-36" >
                   Difficulty
                 </label>
 
                 <div className="flex gap-3">
 
-                  <button className="px-6 py-2 rounded-xl border">
+                  <button className={`px-6 py-2 rounded-xl border ${gameDifficulty === 1 ? 'bg-[#5B4430]  border-darkgold text-[#F5E6C8]' : 'bg-transparent border-[#5B4430] text-[#F5E6C8] '}`} onClick={() => {setGameDifficulty(1)}}>
                     Easy
                   </button>
 
-                  <button className="px-6 py-2 rounded-xl bg-[#4a3220] text-white">
+                  <button className={`px-6 py-2 rounded-xl bg-[#4a3220] border ${gameDifficulty === 2 ? 'bg-[#5B4430] border-darkgold text-[#F5E6C8]' : 'bg-transparent border-[#5B4430]  text-[#F5E6C8] '}`} onClick={() => {setGameDifficulty(2)}}>
                     Normal
                   </button>
 
-                  <button className="px-6 py-2 rounded-xl border">
+                   <button className={`px-6 py-2 rounded-xl bg-[#4a3220] border ${gameDifficulty === 3 ? 'bg-[#5B4430] border-darkgold text-[#F5E6C8]' : 'bg-transparent border-[#5B4430]  text-[#F5E6C8] '}`} onClick={() => {setGameDifficulty(3)}}>
                     Hard
                   </button>
 
                 </div>
 
               </div>
-
-              {/* Player */}
-
-              <div className="flex items-center">
-
-                <label className="w-36">
-                  Play As
-                </label>
-
-                <div className="flex gap-3">
-
-                  <button className="px-6 py-2 rounded-xl bg-[#4a3220] text-white">
-                    Player 1
-                  </button>
-
-                  <button className="px-6 py-2 rounded-xl border">
-                    Player 2
-                  </button>
-
-                </div>
-
-              </div>
-
+              
             </div>
 
           </section>
@@ -887,24 +931,24 @@ const LINES = [
         {/* Footer */}
 
         <div className="flex justify-between p-8 border-t border-[#c8aa73]">
+        
+        <button className="flex items-center gap-2 border px-6 py-3 rounded-xl hover:bg-[#e8d6b4] transition" onClick={resetFxn}>
 
-          <button className="flex items-center gap-2 border px-6 py-3 rounded-xl hover:bg-[#e8d6b4] transition">
+        <RotateCcw size={18} />
 
-            <RotateCcw size={18} />
+        Reset
 
-            Reset
+        </button>
 
-          </button>
+        <button className="flex items-center gap-2 bg-[#5A3A22] text-white px-8 py-3 rounded-xl hover:bg-[#382416] transition" onClick={returnScreen}>
 
-          <button className="flex items-center gap-2 bg-[#5A3A22] text-white px-8 py-3 rounded-xl hover:bg-[#382416] transition">
+        <Check size={18} />
 
-            <Check size={18} />
+        Save & Close
 
-            Save & Close
+        </button>
 
-          </button>
-
-        </div>
+    </div>
 
       </div>
 

@@ -5,6 +5,7 @@ import bg from '../../../../assets/background-collage.png'
 import thinking_image  from '../../../../assets/black_man_thinking.webp'
 import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from '../../../../context/languageContext'
 import woodTapSound from '../../../../assets/sound/woodTap.mp3'
 import victorySound from '../../../../assets/sound/victory.mp3'
 import errorSound from '../../../../assets/sound/error.mp3'
@@ -15,30 +16,33 @@ import placePiece from '../../../../assets/sound/piecePlacement.mp3'
 import introOne from '../../../../assets/sound/oware/introOne.m4a'
 import introTwo from '../../../../assets/sound/oware/introTwo.m4a'
 import introThree from '../../../../assets/sound/oware/introThree.m4a'
-
+import engIntroOne from '../../../../assets/sound/oware/OwareLessonOneStepOne.mp3'
+import engIntroTwo from '../../../../assets/sound/oware/OwareLessonOneStepTwo.mp3'
+import engIntroThree from '../../../../assets/sound/oware/OwareLessonOneStepThree.mp3'
 
 export default function OwareLesson1(){
 
 const woodTap = useRef(new Audio(woodTapSound))
 const pieceSound = useRef(new Audio(placePiece))
 const voiceRef = useRef(new Audio());
+const {language} = useLanguage()
 
 
 
 const steps = [{
         step: '1',
         text: "Welcome! I'm Agokansie, your Oware companion. Whether this is your very first game or you're looking to sharpen your skills, I'll guide you every step of the way. By the end of this tutorial, you'll understand the rules, know how to capture seeds, and be ready to play your first complete game. Let's begin!",
-        voice: introOne
+        voice: language === 'english' ? engIntroOne :introOne
 
     },{
         step: '2',
         text: "Oware is one of the oldest and most popular traditional African board games. It belongs to the Mancala family of games and has been played for centuries across West Africa. Although the rules are simple, mastering Oware requires planning, strategy, and careful thinking.",
-        voice: introTwo
+        voice: language === 'english' ? engIntroTwo :introTwo
 
     },{
         step: '3',
         text: "The objective is simple: collect more seeds than your opponent. There are forty-eight seeds in total, so collecting twenty-five guarantees victory. If each player collects twenty-four seeds, the game ends in a draw.",
-        voice: introThree
+        voice: language === 'english' ? engIntroThree : introThree
 
     } ]
 

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
+import { useLanguage } from '../../../context/languageContext'
 import Victory from '../../../assets/sound/victory.mp3'
 import { gsap } from 'gsap'
 
@@ -16,12 +17,17 @@ import tipsOne from '../../../assets/sound/dame/tipsOne.m4a'
 import tipsTwo from '../../../assets/sound/dame/tipsTwo.m4a'
 import tipsThree from '../../../assets/sound/dame/tipsThree.m4a'
 import tipsFour from '../../../assets/sound/dame/tipsFour.m4a'
+import engTipsOne from '../../../assets/sound/dame/DameLessonSixStepOne.mp3'
+import engTipsTwo from '../../../assets/sound/dame/DameLessonSixStepTwo.mp3'
+import engTipsThree from '../../../assets/sound/dame/DameLessonSixStepThree.mp3'
+import engTipsFour from '../../../assets/sound/dame/DameLessonSixStepFour.mp3'
 
 
 export default  function DameLesson6(){
 
 const woodTap = useRef(new Audio(woodTapSound))
 const error = useRef(new  Audio(ErrorSound))
+const {language} = useLanguage()
 const hint = useRef (new Audio(showHint))
 const victory = useRef(new Audio(Victory))
 const voiceRef = useRef(new Audio());
@@ -63,22 +69,22 @@ const playVictory = ()  => {
  const steps = [{
         step: '1',
         text: "Try to control the centre of the board. Centre positions provide more movement options and make it easier to launch attacks or defend your pieces.",
-        voice: 'Foolish boy Siaw'
+        voice: language === 'english' ? engTipsOne : tipsOne
 
     },{
         step: '2',
         text: "Sometimes sacrificing a single piece can create an opportunity to capture several of your opponent's pieces. Use these tactical exchanges wisely. In this example, capturing is not compulsory.",
-        voice: 'Foolish boy Siaw'
-
+        voice: language === 'english' ? engTipsTwo : tipsTwo
+ 
     },{
         step: '3',
         text: "Keep your back row protected whenever possible. It acts as your final line of defence and prevents your opponent from promoting their pieces too easily.",
-        voice: 'Foolish boy Siaw'
+        voice: language === 'english' ? engTipsThree : tipsThree
 
     },{
         step: '4',
         text: "Always look several moves ahead. Planning your attacks while anticipating your opponent's responses is one of the best ways to become a stronger Dame player.",
-        voice: 'Foolish boy Siaw'
+        voice: language ==='english' ? engTipsFour : tipsFour
 
     } ]
 

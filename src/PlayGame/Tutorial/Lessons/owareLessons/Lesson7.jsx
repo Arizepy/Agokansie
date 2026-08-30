@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import PageWrapper from '../../../../WelcomeScreen/PageWrapper'
 import bg from '../../../../assets/background-collage.png'
 import thinking_image  from '../../../../assets/black_man_thinking.webp'
+import { useLanguage } from '../../../../context/languageContext'
 import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../../assets/sound/woodTap.mp3'
@@ -18,6 +19,13 @@ import tipsTwo from '../../../../assets/sound/oware/tipsTwo.m4a'
 import tipsThree from '../../../../assets/sound/oware/tipsThree.m4a'
 import tipsFour from '../../../../assets/sound/oware/tipsFour.m4a'
 import endSound from '../../../../assets/sound/oware/endSound.m4a'
+import engTipsOne from '../../../../assets/sound/oware/OwareLessonSevenStepOne.mp3'
+import engTipsTwo from '../../../../assets/sound/oware/OwareLessonSevenStepTwo.mp3'
+import engTipsThree from '../../../../assets/sound/oware/OwareLessonSevenStepThree.mp3'
+import engTipsFour from '../../../../assets/sound/oware/OwareLessonSevenStepFour.mp3'
+import engEndSound from '../../../../assets/sound/oware/OwareLessonSevenStepFive.mp3'
+
+
 
 
 
@@ -27,6 +35,7 @@ function OwareLesson7(){
 const woodTap = useRef(new Audio(woodTapSound))
 const thinking = "..."
 const pieceSound = useRef(new Audio(placePiece))
+const {language} = useLanguage()
 const hightlight  = useRef(new Audio(Hightlight))
 const error = useRef (new Audio(errorSound))
 const victory = useRef(new Audio(victorySound))
@@ -75,26 +84,26 @@ const playWoodTap = () => {
 const steps = [{
         step: '1',
         text: "Always try to predict where your final seed will land before making a move. Thinking several steps ahead greatly improves your chances of creating captures and avoiding mistakes.",
-        voice: tipsOne
+        voice: language === 'english' ? engTipsOne : tipsOne
     },{
         step: '2',
         text: "Maintaining two or three seeds in several of your pits gives you more options for future turns and increases your chances of creating chain moves.",
-        voice: tipsTwo
+        voice: language === 'english' ? engTipsTwo : tipsTwo
 
     },{
         step: '3',
         text: "Make good use of pits containing five or more seeds. These allow you to spread seeds farther around the board and gain better control of the game.",
-        voice: tipsThree
+        voice: language === 'english' ? engTipsThree : tipsThree
 
     },{
         step: '4',
         text: "Watch your opponent's possible moves carefully. Anticipating their strategy helps you avoid giving away easy captures while creating opportunities for yourself.",
-        voice: tipsFour
+        voice: language === 'english' ? engTipsFour : tipsFour
 
     }, {
         step: '5',
         text: "Congratulations! You've completed the Oware tutorial. You now understand the basic rules, how to sow seeds, capture your opponent's seeds, and think strategically before each move. Keep practising to sharpen your skills, challenge stronger opponents, and enjoy one of Africa's greatest traditional board games. Good luck, and have fun playing!",
-        voice : endSound
+        voice : language === 'english' ? engEndSound : engSound
     } ]
 
 //Navigate

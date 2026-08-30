@@ -5,6 +5,8 @@ import GameScreen from "../PlayGame/startGame";
 import { useState, useRef, useContext} from 'react'
 import { ChevronRight, ChevronLeft, ArrowLeft, ArrowRight } from 'lucide-react'
 import { GameContext } from "../context/GameContext";
+import { AudioSettingsContext } from "../context/audioSettingsContext";
+import { useSfxPlayer } from "../hooks/useVoicePlayer";
 
 import swipeSound from '../assets/sound/uiSwipeSound.mp3'
 import woodTapSound from '../assets/sound/woodTap.mp3'
@@ -20,22 +22,21 @@ import { API } from "../PlayGame/API";
         const APIKEY = `${API}/api/game/select`
        
         const {games, currentGame, setCurrentGame} = useContext(GameContext)
+        const { sfxVolume } = useContext(AudioSettingsContext)
         const [isLoading, setIsLoading] = useState(false)
-        const swipeAudio = useRef(new Audio(swipeSound))
+        const playSwipe = useSfxPlayer(swipeSound, sfxVolume)
         const navigate = useNavigate()
     
         const nextGame = () => {
             setCurrentGame((previous) => (previous + 1) % games.length)
-            swipeAudio.current.currentTime = 0
-            swipeAudio.current.play()   
+            playSwipe()   
     
         }
 
         const previousGame = () => {
             setCurrentGame( (previous) => 
                 previous === 0 ? games.length - 1 : previous - 1)
-                swipeAudio.current.currentTime = 0  
-                swipeAudio.current.play()
+                playSwipe()
         }               
 
         const SWIPE_THRESHOLD = 75
@@ -49,7 +50,7 @@ import { API } from "../PlayGame/API";
             }
         }
 
-        const woodTap = useRef(new Audio(woodTapSound))
+        const playWoodTap = useSfxPlayer(woodTapSound, sfxVolume)
 
         
         async function sendPostRequest(){
@@ -103,8 +104,7 @@ import { API } from "../PlayGame/API";
                     navigate('/achiScreen')
                 }
 
-                woodTap.current.currentTime = 0
-                woodTap.current.play()  
+                playWoodTap()
 
                 setIsLoading(false)
                 console.log('button clicked')
@@ -117,14 +117,12 @@ import { API } from "../PlayGame/API";
 
         const goBack = () => {
             navigate(-1)
-            woodTap.current.currentTime = 0
-            woodTap.current.play()
+            playWoodTap()
         }
 
         const goForward = () => {
             navigate(1)
-            woodTap.current.currentTime = 0
-            woodTap.current.play()
+            playWoodTap()
         }
 
         const startTutorial = () => {
