@@ -1,4 +1,4 @@
-import { useContext, useState, useRef, useEffect, } from 'react'
+import { useContext, useState, useRef, useEffect, useCallback, } from 'react'
 import PageWrapper from '../../../WelcomeScreen/PageWrapper'
 import bg from '../../../assets/background-collage.png'
 import thinking_image  from '../../../assets/black_man_thinking.webp'
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
+import { useLanguage } from '../../../context/languageContext'
 import Victory from '../../../assets/sound/victory.mp3'
 import { gsap } from 'gsap'
 
@@ -16,6 +17,10 @@ import promoteOne from '../../../assets/sound/dame/promotionOne.m4a'
 import promoteTwo from '../../../assets/sound/dame/promotionTwo.m4a'
 import promoteThree from '../../../assets/sound/dame/promotionThree.m4a'
 import promoteFour from '../../../assets/sound/dame/promotionFour.m4a'
+import engPromoteOne from '../../../assets/sound/dame/DameLessonFiveStepOne.mp3'
+import engPromoteTwo from '../../../assets/sound/dame/DameLessonFiveStepTwo.mp3'
+import engPromoteThree from '../../../assets/sound/dame/DameLessonFiveStepThree.mp3'
+import engPromoteFour from '../../../assets/sound/dame/DameLessonFiveStepFour.mp3'
 
 
 function DameLesson5(){
@@ -25,6 +30,7 @@ const error = useRef(new  Audio(ErrorSound))
 const hint = useRef (new Audio(showHint))
 const victory = useRef(new Audio(Victory))
 const voiceRef = useRef(new Audio());
+const {language} = useLanguage()
 
 const thinking = "..."
 
@@ -61,22 +67,22 @@ const steps = [{
     step: '1',
 
     text: "When one of your pieces reaches your opponent's back row, it is promoted to a King.",
-    voice: promoteOne
-
+    voice: language === 'english' ? engPromoteOne : promoteOne
+ 
 },{
     step: '2',
-    text: "A King can move diagonally both forwards and backwards, giving it much greater mobility than a regular piece.",
-    voice: promoteTwo
+    text: "A King can move diagonally both forwards and backwards, gIf, after making a capture, another capture is immediately available, you must continue jumping in the same turn until no further captures can be made.iving it much greater mobility than a regular piece.",
+    voice: language === 'english' ? engPromoteTwo : promoteTwo
 
 },{
     step: '3',
     text: "Kings can capture opponent pieces in any diagonal direction, making them powerful pieces during the game.",
-    voice: promoteThree
+    voice: language === 'english' ? engPromoteThree : promoteThree
 
 },{
     step: '4',
     text: "Protect your Kings whenever possible, as they can control large areas of the board and greatly improve your chances of winning.",
-    voice: promoteFour
+    voice: language === 'english' ? engPromoteFour :promoteFour
 
 } ]
 

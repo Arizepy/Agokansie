@@ -1,4 +1,5 @@
 import { useContext, useState, useRef, useEffect, } from 'react'
+import { useLanguage } from '../../../context/languageContext'
 import PageWrapper from '../../../WelcomeScreen/PageWrapper'
 import bg from '../../../assets/background-collage.png'
 import {gsap} from 'gsap' 
@@ -13,11 +14,17 @@ import droppingOne from '../../../assets/sound/achi/droppingOne.m4a'
 import droppingTwo from '../../../assets/sound/achi/droppingTwo.m4a'
 import droppingThree from '../../../assets/sound/achi/droppingThree.m4a'
 import droppingFour from '../../../assets/sound/achi/droppingFour.m4a'
+import engDroppingOne from '../../../assets/sound/achi/AchiLessonThreeStepOne.mp3'
+import engDroppingTwo from '../../../assets/sound/achi/AchiLessonThreeStepTwo.mp3'
+import engDroppingThree from '../../../assets/sound/achi/AchiLessonThreeStepThree.mp3'
+import engDroppingFour from '../../../assets/sound/achi/AchiLessonThreeStepFour.mp3'
+
 
 
 function AchiLesson3(){
 
 //Contents
+const {language} = useLanguage()
 const woodTap = useRef(new Audio(woodTapSound))
 const victory = useRef(new Audio(victorySound))
 const voiceRef = useRef(new Audio());
@@ -35,22 +42,22 @@ const playWoodTap = () => {
 const steps = [{
         step: '1',
         text: "At the beginning of the game, players take turns placing one of their pieces onto any empty point on the board.",
-        voice: droppingOne
+        voice: language === 'english' ? engDroppingOne : droppingOne
 
     },{
         step: '2',
         text: "Continue taking turns until all three pieces belonging to each player have been placed on the board.",
-        voice: droppingTwo
+        voice: language === 'english' ? engDroppingTwo : droppingTwo
 
     },{
         step: '3',
         text: "If a player forms a straight line while placing their final piece, they immediately win the game without entering the movement phase.",
-        voice: droppingThree
+        voice: language === 'english' ? engDroppingThree : droppingThree
 
     },{
         step: '4',
         text: "If neither player creates a straight line after all six pieces have been placed, the game continues with players moving their pieces around the board.",
-        voice: droppingFour
+        voice: language === 'english' ? engDroppingFour : droppingFour
 
     } ]
 

@@ -5,14 +5,19 @@ import thinking_image  from '../../../assets/black_man_thinking.webp'
 import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
+import { useLanguage } from '../../../context/languageContext'
 
 //Lesson soundx
 import introOne from '../../../assets/sound/dame/introOne.m4a'
 import introTwo from '../../../assets/sound/dame/introTwo.m4a'
 import introThree from '../../../assets/sound/dame/introThree.m4a'
+ import engIntroOne from '../../../assets/sound/dame/DameLessonOneStepOne.mp3'
+ import engIntroTwo from '../../../assets/sound/dame/DameLessonOneStepTwo.mp3'
+ import engIntroThree from '../../../assets/sound/dame/DameLessonOneStepThree.mp3'
+
 
 function DameLesson1(){
-
+const {language} = useLanguage()
 const woodTap = useRef(new Audio(woodTapSound))
 const thinking = "..."
 const voiceRef = useRef(new Audio());
@@ -30,17 +35,17 @@ const playWoodTap = () => {
 const steps = [{
     step: '1',
     text: "Welcome! I'm Agokansie, your Dame companion. Whether this is your very first game or you're looking to sharpen your skills, I'll guide you every step of the way. By the end of this tutorial, you'll understand the rules, learn how to move pieces, capture opponenet pieces and useful strstegies to win the game . Let's begin!",
-    voice: introOne
+    voice: language === 'english' ? engIntroOne :introOne
 
 },{
     step: '2',
     text: "Dame is a traditional Ghanaian strategy game, commonly known as Checkers. It is widely played across Ghana because it develops patience, tactical thinking, and careful planning.",
-    voice: introTwo
+    voice: language === "english" ? engIntroTwo : introTwo
 
 },{
     step: '3',
     text: "The objective of the game is to capture all of your opponent's pieces or leave them with no legal moves, making you the winner.",
-    voice: introThree
+    voice: language === 'english' ? engIntroThree : introThree
 
 } ]
 

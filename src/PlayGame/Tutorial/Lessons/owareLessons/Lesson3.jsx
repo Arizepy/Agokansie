@@ -1,4 +1,5 @@
 import { useContext, useState, useRef, useEffect, } from 'react'
+import { useLanguage } from '../../../../context/languageContext'
 import PageWrapper from '../../../../WelcomeScreen/PageWrapper'
 import bg from '../../../../assets/background-collage.png'
 import thinking_image  from '../../../../assets/black_man_thinking.webp'
@@ -15,6 +16,10 @@ import lessonOne from '../../../../assets/sound/oware/boardLessonOne.m4a'
 import lessonTwo from '../../../../assets/sound/oware/boardLessonTwo.m4a'
 import lessonThree from '../../../../assets/sound/oware/boardLessonThree.m4a'
 import lessonFour from '../../../../assets/sound/oware/boardLessonFour.m4a'
+import engLessonOne from '../../../../assets/sound/oware/OwareLessonThreeStepOne.mp3'
+import engLessonTwo from '../../../../assets/sound/oware/OwareLessonThreeStepTwo.mp3'
+import engLessonThree from '../../../../assets/sound/oware/OwareLessonThreeStepThree.mp3'
+import engLessonFour from '../../../../assets/sound/oware/OwareLessonThreeStepFour.mp3'
 
 
 
@@ -24,7 +29,7 @@ function OwareLesson3(){
 const woodTap = useRef(new Audio(woodTapSound))
 const pieceSound = useRef(new Audio(placePiece))
 const hightlight  = useRef(new Audio(Hightlight))
-
+const {language} = useLanguage()
 const playPlacePiece = () => {
     if (pieceSound.current){
         pieceSound.current.currentTime = 0; 
@@ -57,22 +62,22 @@ const voiceRef = useRef(new Audio());
     const steps = [{
         step: '1',
         text: "The Oware board consists of twelve pits arranged in two rows of six. Each row belongs to one player and represents that player's territory.",
-        voice: lessonOne
-
+        voice: language === 'english' ? engLessonOne : lessonOne
+ 
     },{
         step: '2',
         text: "The game begins with a total of forty-eight seeds distributed evenly across the board. Every pit starts with exactly four seeds, ensuring both players begin with an equal advantage.",
-        voice: lessonTwo
+        voice: language === 'english' ? engLessonTwo :lessonTwo
 
     },{
         step: '3',
         text: "Before the game starts, take a moment to confirm that every pit contains four seeds and that the board is correctly arranged.",
-        voice: lessonThree
+        voice: language === 'english' ? engLessonThree : lessonThree
 
     },{
         step: '4',
-        text: "Decide who will play first before the game begins, as players will alternate turns until the game ends.  ",
-        voice: lessonFour
+        text: "Decide who will play first before the game begins, as players will alternate turns until the game ends.",
+        voice: language === 'english' ? engLessonFour : lessonFour
 
     } ]
 

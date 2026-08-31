@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
+import { useLanguage } from '../../../context/languageContext'
 import { gsap } from 'gsap'
 
 //Lesson sound 
@@ -14,12 +15,15 @@ import moveOne from '../../../assets/sound/dame/moveOne.m4a'
 import moveTwo from '../../../assets/sound/dame/moveTwo.m4a'
 import moveThree from '../../../assets/sound/dame/moveThree.m4a'
 import moveFour from '../../../assets/sound/dame/moveFour.m4a'
-
+import engMoveOne from '../../../assets/sound/dame/DameLessonThreeStepOne.mp3'
+import engMoveTwo from '../../../assets/sound/dame/DameLessonThreeStepTwo.mp3'
+import engMoveThree from '../../../assets/sound/dame/DameLessonFourStepThree.mp3'
+import engMoveFour from '../../../assets/sound/dame/DameLessonFourStepFour.mp3'
 
 
 
 function DameLesson3(){
-
+const {language} = useLanguage()
 const woodTap = useRef(new Audio(woodTapSound))
 const error = useRef(new  Audio(ErrorSound))
 const hint = useRef (new Audio(showHint))
@@ -54,22 +58,22 @@ const playHint = () => {
   const steps = [{
         step: '1',
         text: "During a normal turn, a piece may move one square diagonally forward into an empty space. Regular pieces cannot move backwards unless making a capture.",
-        voice: moveOne
+        voice: language === 'english' ? engMoveOne : moveOne
 
     },{
         step: '2',
         text: "A piece may move diagonally either to the left or to the right, provided the destination square is empty.",
-        voice: moveTwo
+        voice: language === 'english' ? engMoveTwo : moveTwo
 
     },{
         step: '3',
         text: "When a piece reaches the edge of the board, its movement becomes limited because it can only move toward available spaces inside the board.",
-        voice: moveThree
+        voice: language === 'english' ? engMoveThree : moveThree
 
     },{
         step: '4',
         text: "If all possible diagonal spaces are occupied by other pieces, whether they belong to you or your opponent, that piece becomes blocked and cannot move.",
-        voice: moveFour
+        voice: language === 'english' ? engMoveFour : moveFour
 
     } ]
 

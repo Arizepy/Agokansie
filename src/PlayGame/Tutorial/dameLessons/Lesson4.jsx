@@ -4,6 +4,7 @@ import bg from '../../../assets/background-collage.png'
 import thinking_image  from '../../../assets/black_man_thinking.webp'
 import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from '../../../context/languageContext'
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
@@ -15,6 +16,10 @@ import captureOne from '../../../assets/sound/dame/captureOne.m4a'
 import captureTwo from '../../../assets/sound/dame/captureTwo.m4a'
 import captureThree from '../../../assets/sound/dame/captureThree.m4a'
 import captureFour from '../../../assets/sound/dame/captureFour.m4a'
+import engCaptureOne from '../../../assets/sound/dame/DameLessonFourStepOne.mp3'
+import engCaptureTwo from '../../../assets/sound/dame/DameLessonFourStepTwo.mp3'
+import engCaptureThree from '../../../assets/sound/dame/DameLessonFourStepThree.mp3'
+import engCaptureFour from '../../../assets/sound/dame/DameLessonFourStepFour.mp3'
 
 
 export default function DameLesson4(){
@@ -24,7 +29,7 @@ const error = useRef(new  Audio(ErrorSound))
 const hint = useRef (new Audio(showHint))
 const victory = useRef(new Audio(Victory))
 const voiceRef = useRef(new Audio());
-
+const {language} = useLanguage()
 const thinking = "..."
 
 const playWoodTap = () => { 
@@ -61,22 +66,22 @@ const playVictory = ()  => {
  const steps = [{
         step: '1',
         text: "A capture is made by jumping diagonally over an adjacent opponent's piece into the empty square immediately behind it. The jumped piece is then removed from the board.",
-        voice: captureOne
+        voice: language === 'english' ? engCaptureOne : captureOne
 
     },{
         step: '2',
         text: "Capturing is compulsory in Dame. Whenever a capture is available, you must make it before any other move.",
-        voice: captureTwo
+        voice: language === 'english'? engCaptureTwo : captureTwo
 
     },{
         step: '3',
         text: "Regular pieces may move backwards only when performing a legal capture. Backward movement is not allowed during ordinary moves.",
-        voice: captureThree
-
+        voice: language === 'english' ? engCaptureThree : captureThree
+ 
     },{
         step: '4',
         text: "If, after making a capture, another capture is immediately available, you must continue jumping in the same turn until no further captures can be made.",
-        voice: captureFour
+        voice: language === 'english' ? engCaptureFour : captureFour
 
     } ]
 

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import victorySound from '../../../assets/sound/victory.mp3'
 import HightLight from '../../../assets/sound/blocked.mp3'
+import { useLanguage } from '../../../context/languageContext'
 import { gsap } from 'gsap'
 
 //Lesson sound 
@@ -14,6 +15,10 @@ import tipsOne from '../../../assets/sound/achi/tipsOne.m4a'
 import tipsTwo from '../../../assets/sound/achi/tipsTwo.m4a'
 import tipsThree from '../../../assets/sound/achi/tipsThree.m4a'
 import tipsFour from '../../../assets/sound/achi/tipsFour.m4a'
+import engTipsOne from '../../../assets/sound/achi/AchiLessonSixStepOne.mp3'
+import engTipsTwo from '../../../assets/sound/achi/AchiLessonSixStepTwo.mp3'
+import engTipsThree from '../../../assets/sound/achi/AchiLessonSixStepThree.mp3'
+import engTipsFour from '../../../assets/sound/achi/AchiLessonSixStepFour.mp3'
 
 
 
@@ -22,6 +27,7 @@ function AchiLesson6(){
 const woodTap = useRef(new Audio(woodTapSound))
 const victory = useRef(new Audio(victorySound))
 const highlight = useRef( new Audio (HightLight))
+const {language} = useLanguage()
 const voiceRef = useRef(new Audio());
 
 const thinking = "..."
@@ -53,22 +59,22 @@ const playVictory = () => {
 const steps = [{
     step: '1',
     text: "Try to control the centre position whenever possible. A piece placed in the centre has the greatest number of movement options and offers more flexibility.",
-    voice: tipsOne
+    voice: language === 'english' ? engTipsOne : tipsOne
 
 },{
     step: '2',
     text: "Look for opportunities to create multiple winning threats at the same time. This forces your opponent to defend against more than one possible line.",
-    voice: tipsTwo
+    voice: language === 'english' ? engTipsTwo : tipsTwo
 
 },{
     step: '3',
     text: "Building a V-shaped formation with an empty centre can often create an unavoidable winning opportunity if your opponent is not careful.",
-    voice: tipsThree
+    voice: language === 'english' ? engTipsThree : tipsThree
 
 },{
     step: '4',
     text: "Always pay attention to your opponent's next move. Blocking a potential winning line is often just as important as creating one of your own.",
-    voice: tipsFour
+    voice: language === 'english' ? engTipsFour : tipsFour
 
 } ]
 

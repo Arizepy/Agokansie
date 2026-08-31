@@ -4,6 +4,7 @@ import bg from '../../../assets/background-collage.png'
 import thinking_image  from '../../../assets/black_man_thinking.webp'
 import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from '../../../context/languageContext'
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 
 //LessonSound
@@ -11,10 +12,13 @@ import rulesOne from '../../../assets/sound/dame/rulesOne.m4a'
 import rulesTwo from '../../../assets/sound/dame/rulesTwo.m4a'
 import rulesThree from '../../../assets/sound/dame/rulesThree.m4a'
 import rulesFour from '../../../assets/sound/dame/rulesFour.m4a'
-
+import engRulesOne from '../../../assets/sound/dame/DameLessonTwoStepOne.mp3'
+import engRulesTwo from '../../../assets/sound/dame/DameLessonTwoStepTwo.mp3'
+import engRulesThree from '../../../assets/sound/dame/DameLessonTwoStepThree.mp3'
+import engRulesFour from '../../../assets/sound/dame/DameLessonTwoStepFour.mp3'
 
 export default function DameLesson2(){
-
+const {language} = useLanguage()
 const woodTap = useRef(new Audio(woodTapSound))
 const thinking = "..."
 const voiceRef = useRef(new Audio());
@@ -30,22 +34,22 @@ const playWoodTap = () => {
 const steps = [{
         step: '1',
         text: "Handle every game piece with care when placing, moving, or capturing. Keeping the pieces properly positioned helps the robot accurately recognise the board state.",
-        voice: rulesOne
+        voice: language === 'english'? engRulesOne : rulesOne
 
     },{
         step: '2',
         text: "Never place your hands inside the robot's working area while it is moving a piece. Wait until the robot has completed its turn before interacting with the board.",
-        voice: rulesTwo
+        voice: language === 'english' ? engRulesTwo : rulesTwo
 
     },{
         step: '3',
         text: "Remove captured pieces only after the robot has finished its capture sequence, unless instructed otherwise by the game interface. Place captured pieces neatly in the designated container.",
-        voice: rulesThree
+        voice: language === 'english' ? engRulesThree : rulesThree
 
     },{
         step: '4',
         text: "Play one move at a time and avoid touching other pieces during a turn. Allow the robot to complete every action before making your next move to ensure fair and accurate gameplay.",
-        voice: rulesFour
+        voice: language === 'english' ? engRulesFour : rulesFour
 
     } ]
 

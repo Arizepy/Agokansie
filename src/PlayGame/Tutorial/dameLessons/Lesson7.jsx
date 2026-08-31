@@ -8,6 +8,7 @@ import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import ErrorSound from '../../../assets/sound/error.mp3'
 import showHint from '../../../assets/sound/blocked.mp3'
 import Victory from '../../../assets/sound/victory.mp3'
+import { useLanguage } from '../../../context/languageContext'
 
 import { gsap } from 'gsap'
 
@@ -16,11 +17,17 @@ import endOne from '../../../assets/sound/dame/endOne.m4a'
 import endTwo from '../../../assets/sound/dame/endTwo.m4a'   
 import endThree from '../../../assets/sound/dame/endThree.m4a'
 import endFour from '../../../assets/sound/dame/endFour.m4a'
+import engEndOne from '../../../assets/sound/dame/DameLessonSevenStepOne.mp3'
+import engEndTwo from '../../../assets/sound/dame/DameLessonSevenStepTwo.mp3'
+import engEndThree from '../../../assets/sound/dame/DameLessonSevenStepThree.mp3'
+import engEndFour from '../../../assets/sound/dame/DameLessonSevenStepFour.mp3'
+
 export default  function DameLesson7(){
 
 const woodTap = useRef(new Audio(woodTapSound))
 const error = useRef(new  Audio(ErrorSound))
 const hint = useRef (new Audio(showHint))
+const {language} = useLanguage()
 const victory = useRef(new Audio(Victory))
 const voiceRef = useRef(new Audio());
 
@@ -60,21 +67,21 @@ const thinking = "..."
  const steps = [{
         step: '1',
         text: "The game ends when one player captures all of their opponent's pieces.",
-        voice: endOne
+        voice: language === 'english' ? engEndOne: endOne
 
     },{
         step: '2',
         text: "A player also wins if their opponent still has pieces remaining but none of them can make a legal move.",
-        voice: endTwo
+        voice: language === 'english' ? engEndTwo : endTwo
 
     },{
         step: '3',
         text: "If neither player can make progress by capturing or blocking the other's remaining pieces, both players may agree to declare the game a draw.",
-        voice: endThree
+        voice: language === 'english' ? engEndThree : endThree
     },{
         step: '4',
         text: "After the game has ended, count the remaining pieces, congratulate the winner, and reset the board to prepare for another match.",
-        voice: endFour
+        voice: language === 'english' ? engEndThree : endThree
 
     } ]
 

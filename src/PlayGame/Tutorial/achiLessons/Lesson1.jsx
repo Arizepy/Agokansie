@@ -11,28 +11,33 @@ import { gsap } from 'gsap'
 import introOne from '../../../assets/sound/achi/introOne.m4a'
 import introTwo from '../../../assets/sound/achi/introTwo.m4a'
 import introThree from '../../../assets/sound/achi/introThree.m4a'
+import engIntroOne from '../../../assets/sound/achi/AchiLessonOneStepOne.mp3'
+import engIntroTwo from '../../../assets/sound/achi/AchiLessonOneStepTwo.mp3'
+import engIntroThree from '../../../assets/sound/achi/AchiLessonOneStepThree.mp3'
+import { useLanguage } from '../../../context/languageContext'
+
 
 function AchiLesson1(){
 
 const woodTap = useRef(new Audio(woodTapSound))
 const voiceRef = useRef(new Audio());
-
+const {language} = useLanguage()
 const thinking = "..."
 
  const steps = [{
         step: '1',
         text: "Welcome! I'm Agokansie, your Achi companion. Whether this is your very first game or you're looking to sharpen your skills, I'll guide you every step of the way. By the end of this tutorial, you'll understand the rules of achi, learn how to move pieces, and tactical tricks to ensure victory. Let's begin!",
-        voice: introOne
+        voice: language === 'english' ? engIntroOne : introOne
 
     },{
         step: '2',
         text: "Archi is a traditional strategy game played by many people across Ghana. Despite its simple 3×3 board, it requires careful planning and smart decision-making.",
-        voice: introTwo
+        voice: language === 'english' ? engIntroTwo : introTwo
 
     },{
         step: '3',
         text: "The objective of the game is to arrange all three of your pieces in a straight line. This line may be horizontal, vertical, or diagonal.",
-        voice: introThree
+        voice: language === 'english' ? engIntroThree : introThree
 
     } ]
 

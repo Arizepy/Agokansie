@@ -1,4 +1,5 @@
 import { useContext, useState, useRef, useEffect, } from 'react'
+import { useLanguage } from '../../../context/languageContext'
 import PageWrapper from '../../../WelcomeScreen/PageWrapper'
 import bg from '../../../assets/background-collage.png'
 import thinking_image  from '../../../assets/black_man_thinking.webp'
@@ -15,6 +16,11 @@ import moveOne from '../../../assets/sound/achi/movesOne.m4a'
 import moveTwo from '../../../assets/sound/achi/movesTwo.m4a'
 import moveThree from '../../../assets/sound/achi/movesThree.m4a'
 import moveFour from '../../../assets/sound/achi/movesFour.m4a'
+import engMoveOne from '../../../assets/sound/achi/AchiLessonFourStepOne.mp3'
+import engMoveTwo from '../../../assets/sound/achi/AchiLessonFourStepTwo.mp3'
+import engMoveThree from '../../../assets/sound/achi/AchiLessonFourStepThree.mp3'
+import engMoveFour from '../../../assets/sound/achi/AchiLessonFourStepFour.mp3'
+
 
 
 function AchiLesson4(){
@@ -24,13 +30,13 @@ const error = useRef(new Audio(ErrorSound))
 const blocked = useRef(new Audio(blockedAudio))
 const victory = useRef(new Audio(VictorySound))
 const voiceRef = useRef(new Audio());
+const {language} = useLanguage()
 
 const thinking = "..."
 
 const playWoodTap = () => { 
     if (woodTap.current) { 
         woodTap.current.currentTime = 0; 
-        woodTap.currrent.volume = 0.1;
         woodTap.current.play()
     }
 }
@@ -39,22 +45,22 @@ const playWoodTap = () => {
 const steps = [{
     step: '1',
     text: "Once all pieces have been placed, players continue taking turns moving one piece at a time.",
-    voice: moveOne
+    voice: language === 'english' ? engMoveOne : moveOone
 
 },{
     step: '2',
     text: "A piece may only move along the connecting lines to an adjacent empty point. Pieces cannot jump over other pieces or move into occupied spaces.",
-    voice: moveTwo
+    voice: language === 'english' ? engMoveTwo :moveTwo
 
 },{
     step: '3',
     text: "A piece that is completely surrounded by other pieces and has no adjacent empty spaces is blocked and cannot be moved until a space becomes available.",
-    voice: moveThree
+    voice: language === 'english' ? engMoveThree : moveThree
 
 },{
     step: '4',
     text: "Players continue moving their pieces until one player successfully forms a straight line of three pieces.",
-    voice: moveFour
+    voice: language === 'english' ? engMoveFour : moveFour
 
 } ]
 

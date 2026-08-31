@@ -5,6 +5,7 @@ import bg from '../../../../assets/background-collage.png'
 import thinking_image  from '../../../../assets/black_man_thinking.webp'
 import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House, LayoutList} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from '../../../../context/languageContext'
 import placePiece from '../../../../assets/sound/piecePlacement.mp3'
 import Hightlight from '../../../../assets/sound/blocked.mp3'
 import errorSound from '../../../../assets/sound/error.mp3'
@@ -16,6 +17,10 @@ import soundOne from '../../../../assets/sound/oware/gameEndOne.m4a'
 import soundTwo from '../../../../assets/sound/oware/gameEndTwo.m4a'
 import soundThree from '../../../../assets/sound/oware/gameEndThree.m4a'
 import soundFour from '../../../../assets/sound/oware/gameEndFour.m4a'
+import engSoundOne from '../../../../assets/sound/oware/OwareLessonSixStepOne.mp3'
+import engSoundTwo from '../../../../assets/sound/oware/OwareLessonSixStepTwo.mp3'
+import engSoundThree from '../../../../assets/sound/oware/OwareLessonSixStepThree.mp3'
+import engSoundFour from '../../../../assets/sound/oware/OwareLessonSixStepFour.mp3'
 
 
 function OwareLesson6(){
@@ -23,6 +28,7 @@ function OwareLesson6(){
 
 const woodTap = useRef(new Audio(woodTapSound))
 const thinking = "..."
+const {language} = useLanguage()
 const pieceSound = useRef(new Audio(placePiece))
 const hightlight  = useRef(new Audio(Hightlight))
 const error = useRef (new Audio(errorSound))
@@ -73,22 +79,22 @@ const playWoodTap = () => {
 const steps = [{
         step: '1',
         text: "A round comes to an end when only four seeds remain on the board. If one player has already captured four more seeds than the other, that player receives the remaining four seeds.",
-        voice: soundOne
+        voice: language === 'english' ? engSoundOne :soundOne
  
     },{
         step: '2',
         text: "After all captured and remaining seeds have been counted, the player with the highest total number of seeds is declared the winner.",
-        voice: soundTwo
+        voice: language === 'english' ? engSoundTwo: soundTwo
 
     },{
         step: '3',
         text: "If both players finish with the same number of seeds, the game is considered a draw.",
-        voice: soundThree
+        voice: language === 'english'? engSoundThree : soundThree
 
     },{
         step: '4',
         text: "Once the winner has been announced, return all forty-eight seeds to the board to prepare for the next game.",
-        voice: soundFour
+        voice: language === 'english' ? engSoundFour : soundFour
 
     } ]
 
