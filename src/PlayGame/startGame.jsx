@@ -473,7 +473,7 @@ function OwareGame(){
                         },
                         {
                             text: "Everything is set. Shall we begin?",
-                            voice: language === 'englsih' ? engShallWeBegin : shallWeBegin
+                            voice: language === 'english' ? engShallWeBegin : shallWeBegin
                         },
                         {
                             text: "May the best strategist win",
@@ -791,7 +791,7 @@ function OwareGame(){
             
 
             {displayScreen ?
-                <div className='absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-220 h-150 '>
+                <div className='absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-220 h-150 z-100'>
                         
 
       {/* Card */}
