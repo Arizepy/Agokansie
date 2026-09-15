@@ -116,7 +116,7 @@ function OwareGame(){
     const [gameDifficulty, setGameDifficulty] = useState(0)
     const {language} = useLanguage()
     const { musicVolume, setMusicVolume, sfxVolume, setSfxVolume } = useContext(AudioSettingsContext)
-    const playVoice = useVoicePlayer(musicVolume)
+    const playVoice = useVoicePlayer(sfxVolume)
     const useRobotCaputureSeedResponses = () => {
             const RobotCaptureSeedResponses = [
                {

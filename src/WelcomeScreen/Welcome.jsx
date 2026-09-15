@@ -23,6 +23,7 @@ function WelcomeScreen({music}){
         playWoodTap()
 
     }
+    
       const handleSelectLanguage = () => {
         setStep('choosing')
     }

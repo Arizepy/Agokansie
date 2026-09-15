@@ -3,6 +3,7 @@ import PageWrapper from '../../../WelcomeScreen/PageWrapper'
 import bg from '../../../assets/background-collage.png'
 import thinking_image  from '../../../assets/black_man_thinking.webp'
 import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
+import SoundSettingsWidget from '../../TutorialSettingsScreen'
 import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
 import VictorySound from '../../../assets/sound/victory.mp3'
@@ -533,9 +534,11 @@ return(
     <div className='flex flex-col h-screen w-full'>
 
     <div className="absolute top-0 right-0 flex items-center gap-4 z-50 bg-dark/50 p-3 rounded-bl-lg">
+        <SoundSettingsWidget/>
         <ArrowLeft className=' left-3 size-8 cursor-pointer text-midGold' onClick={goBack} />
         <ArrowRight className=' size-8 text-gold-300 cursor-pointer text-midGold' onClick={goForward} />
         <House className=' size-7 text-gold-300 cursor-pointer text-midGold' onClick={() => {navigate('/selectionScreen')}}/>
+        <Settings size={22} className='size-7 text-gold-300 cursor-pointer text-midGold' onClick={() => {setIsOpen(!isOpen)}}/>
 
     </div>
 
@@ -636,11 +639,10 @@ return(
 
         </div>
 </div>
-        
-        
+   {isOpen&&(
+            <SoundSettingsWidget isOpen={isOpen} setIsOpen={setIsOpen}/>
+        )}
 
-        
-    
     </div>
 </PageWrapper>
 

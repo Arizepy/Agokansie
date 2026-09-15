@@ -786,171 +786,171 @@ const LINES = [
             }  
 
             {displayScreen ?
-                <div className='absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-220 h-150 z-100 '>
+            <div className='absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-220 h-150 z-100 '>
                         
 
-      {/* Card */}
-      <div className="rounded-3xl border-4 border-[#b98b56] bg-[#efe0c2] shadow-2xl overflow-hidden bg-wood1">
+                    {/* Card */}
+                    <div className="rounded-3xl border-4 border-[#b98b56] bg-[#efe0c2] shadow-2xl overflow-hidden bg-wood1">
 
-        {/* Header */}
-        <div className="relative py-2 text-center border-b border-[#c8aa73] ">
+                        {/* Header */}
+                        <div className="relative py-2 text-center border-b border-[#c8aa73] ">
 
-          <button className="absolute right-3 top-3 cursor-pointer hover:scale-110 transition" onClick={returnScreen}>
-            <CircleX className='size-9 text-gold'/>
-          </button>
+                        <button className="absolute right-3 top-3 cursor-pointer hover:scale-110 transition" onClick={returnScreen}>
+                            <CircleX className='size-9 text-gold'/>
+                        </button>
 
-          <h1
-            className="text-6xl tracking-widest text-darkgold font-kablammo "
-          >
-            {games[currentGame].name}
-          </h1>
+                        <h1
+                            className="text-6xl tracking-widest text-darkgold font-kablammo "
+                        >
+                            {games[currentGame].name}
+                        </h1>
 
-          <p className="text-gold uppercase tracking-[4px] mt-1">
-            SETTINGS
-          </p>
-        </div>
+                        <p className="text-gold uppercase tracking-[4px] mt-1">
+                            SETTINGS
+                        </p>
+                        </div>
 
-        {/* Body */}
-        <div className="p-8 space-y-10">
+                        {/* Body */}
+                        <div className="p-8 space-y-10">
 
-          {/* ---------------- SOUND ---------------- */}
+                        {/* ---------------- SOUND ---------------- */}
 
-          <section>
+                        <section>
 
-            <div className="flex items-center gap-3 mb-5">
+                            <div className="flex items-center gap-3 mb-5">
 
-              <div className="w-14 h-14 rounded-full bg-[#5f4326] text-white flex items-center justify-center">
-                <Volume2 size={28} />
-              </div>
+                            <div className="w-14 h-14 rounded-full bg-[#5f4326] text-white flex items-center justify-center">
+                                <Volume2 size={28} />
+                            </div>
 
-              <h2 className="text-2xl font-bold">
-                SOUND
-              </h2>
+                            <h2 className="text-2xl font-bold">
+                                SOUND
+                            </h2>
 
-            </div>
+                            </div>
 
-            <div className="space-y-5 ml-20">
+                            <div className="space-y-5 ml-20">
 
-              <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4">
 
-                <Music />
+                                <Music />
 
-                <label className="w-24">
-                  Music
-                </label>
+                                <label className="w-24">
+                                Music
+                                </label>
 
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={Math.round(musicVolume * 100)}
-                  onChange={(e) => setMusicVolume(Number(e.target.value) / 100)}
-                  className="flex-1 accent-sky-500"
-                />
+                                <input
+                                type="range"
+                                min={0}
+                                max={100}
+                                value={Math.round(musicVolume * 100)}
+                                onChange={(e) => setMusicVolume(Number(e.target.value) / 100)}
+                                className="flex-1 accent-sky-500"
+                                />
 
-                <span>{Math.round(musicVolume * 100)}%</span>
+                                <span>{Math.round(musicVolume * 100)}%</span>
 
-              </div>
+                            </div>
 
-              <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4">
 
-                <AudioLines />
+                                <AudioLines />
 
-                <label className="w-24">
-                  SFX
-                </label>
+                                <label className="w-24">
+                                SFX
+                                </label>
 
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={Math.round(sfxVolume * 100)}
-                  onChange={(e) => setSfxVolume(Number(e.target.value) / 100)}
-                  className="flex-1 accent-sky-500"
-                />
+                                <input
+                                type="range"
+                                min={0}
+                                max={100}
+                                value={Math.round(sfxVolume * 100)}
+                                onChange={(e) => setSfxVolume(Number(e.target.value) / 100)}
+                                className="flex-1 accent-sky-500"
+                                />
 
-                <span>{Math.round(sfxVolume * 100)}%</span>
+                                <span>{Math.round(sfxVolume * 100)}%</span>
 
-              </div>
+                            </div>
 
-            </div>
+                            </div>
 
-          </section>
+                        </section>
 
-          {/* ---------------- GAMEPLAY ---------------- */}
+                        {/* ---------------- GAMEPLAY ---------------- */}
 
-           <section>
+                        <section>
 
-            <div className="flex items-center gap-3 mb-5">
+                            <div className="flex items-center gap-3 mb-5">
 
-              <div className="w-14 h-14 rounded-full bg-[#5f4326] text-white flex items-center justify-center">
-                <Gamepad2 size={28} />
-              </div>
+                            <div className="w-14 h-14 rounded-full bg-[#5f4326] text-white flex items-center justify-center">
+                                <Gamepad2 size={28} />
+                            </div>
 
-              <h2 className="text-2xl font-bold">
-                GAMEPLAY
-              </h2>
+                            <h2 className="text-2xl font-bold">
+                                GAMEPLAY
+                            </h2>
 
-            </div>
+                            </div>
 
-            <div className="ml-20 space-y-6">
+                            <div className="ml-20 space-y-6">
 
-              {/* Difficulty */}
+                            {/* Difficulty */}
 
-              <div className="flex items-center">
+                            <div className="flex items-center">
 
-                <label className="w-36" >
-                  Difficulty
-                </label>
+                                <label className="w-36" >
+                                Difficulty
+                                </label>
 
-                <div className="flex gap-3">
+                                <div className="flex gap-3">
 
-                  <button className={`px-6 py-2 rounded-xl border ${gameDifficulty === 1 ? 'bg-[#5B4430]  border-darkgold text-[#F5E6C8]' : 'bg-transparent border-[#5B4430] text-[#F5E6C8] '}`} onClick={() => {setGameDifficulty(1)}}>
-                    Easy
-                  </button>
+                                <button className={`px-6 py-2 rounded-xl border ${gameDifficulty === 1 ? 'bg-[#5B4430]  border-darkgold text-[#F5E6C8]' : 'bg-transparent border-[#5B4430] text-[#F5E6C8] '}`} onClick={() => {setGameDifficulty(1)}}>
+                                    Easy
+                                </button>
 
-                  <button className={`px-6 py-2 rounded-xl bg-[#4a3220] border ${gameDifficulty === 2 ? 'bg-[#5B4430] border-darkgold text-[#F5E6C8]' : 'bg-transparent border-[#5B4430]  text-[#F5E6C8] '}`} onClick={() => {setGameDifficulty(2)}}>
-                    Normal
-                  </button>
+                                <button className={`px-6 py-2 rounded-xl bg-[#4a3220] border ${gameDifficulty === 2 ? 'bg-[#5B4430] border-darkgold text-[#F5E6C8]' : 'bg-transparent border-[#5B4430]  text-[#F5E6C8] '}`} onClick={() => {setGameDifficulty(2)}}>
+                                    Normal
+                                </button>
 
-                   <button className={`px-6 py-2 rounded-xl bg-[#4a3220] border ${gameDifficulty === 3 ? 'bg-[#5B4430] border-darkgold text-[#F5E6C8]' : 'bg-transparent border-[#5B4430]  text-[#F5E6C8] '}`} onClick={() => {setGameDifficulty(3)}}>
-                    Hard
-                  </button>
+                                <button className={`px-6 py-2 rounded-xl bg-[#4a3220] border ${gameDifficulty === 3 ? 'bg-[#5B4430] border-darkgold text-[#F5E6C8]' : 'bg-transparent border-[#5B4430]  text-[#F5E6C8] '}`} onClick={() => {setGameDifficulty(3)}}>
+                                    Hard
+                                </button>
 
-                </div>
+                                </div>
 
-              </div>
-              
-            </div>
+                            </div>
+                            
+                            </div>
 
-          </section>
+                        </section>
 
 
-        </div>
+                        </div>
 
-        {/* Footer */}
+                        {/* Footer */}
 
-        <div className="flex justify-between p-8 border-t border-[#c8aa73]">
-        
-        <button className="flex items-center gap-2 border px-6 py-3 rounded-xl hover:bg-[#e8d6b4] transition" onClick={resetFxn}>
+                        <div className="flex justify-between p-8 border-t border-[#c8aa73]">
+                        
+                        <button className="flex items-center gap-2 border px-6 py-3 rounded-xl hover:bg-[#e8d6b4] transition" onClick={resetFxn}>
 
-        <RotateCcw size={18} />
+                        <RotateCcw size={18} />
 
-        Reset
+                        Reset
 
-        </button>
+                        </button>
 
-        <button className="flex items-center gap-2 bg-[#5A3A22] text-white px-8 py-3 rounded-xl hover:bg-[#382416] transition" onClick={returnScreen}>
+                        <button className="flex items-center gap-2 bg-[#5A3A22] text-white px-8 py-3 rounded-xl hover:bg-[#382416] transition" onClick={returnScreen}>
 
-        <Check size={18} />
+                        <Check size={18} />
 
-        Save & Close
+                        Save & Close
 
-        </button>
+                        </button>
 
-    </div>
+                    </div>
 
-      </div>
+                    </div>
 
     </div>
   

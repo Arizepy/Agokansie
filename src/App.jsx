@@ -1,6 +1,8 @@
-import {useEffect, useRef,useState} from 'react'
+import {useContext, useEffect, useRef,useState} from 'react'
 import { LanguageProvider } from './context/languageContext.jsx'
 import { AudioSettingsProvider } from './context/audioSettingsContext.jsx'
+import { AudioSettingsContext } from './context/audioSettingsContext.jsx'
+import { useVoicePlayer, useSfxPlayer } from './hooks/useVoicePlayer.jsx'
 import WelcomeScreen from './WelcomeScreen/Welcome.jsx'
 import SelectionScreen from './WelcomeScreen/SelectionScreen.jsx'
 import OwareGame from './PlayGame/startGame.jsx'
@@ -54,6 +56,8 @@ function getRandomSong(excludeSong){
 }
 
 function AnimatedRoutes(){
+    const {musicVolume, setMusicVolume} = useContext(AudioSettingsContext)
+    const playMusic = useVoicePlayer(musicVolume)
     const location = useLocation()
     const audioRef = useRef(null)
     const [currentSong, setCurrentSong] = useState(() => getRandomSong(null))
@@ -63,14 +67,19 @@ function AnimatedRoutes(){
 
     const startMusic = () => {
       setMusicStarted(true)
+    } 
+
+   useEffect(() => {
+    if (!musicStarted) return
+    audioRef.current.play().catch(err => console.error('Audio play failed:', err))
+}, [musicStarted, currentSong])
+
+useEffect(() => {
+    if (audioRef.current) {
+        audioRef.current.volume = musicVolume
+        console.log(musicVolume)
     }
-
-    useEffect(() => {
-        if (!musicStarted) return
-        audioRef.current.volume = 0.4
-        audioRef.current.play().catch(err => console.error('Audio play failed:', err))
-
-    }, [musicStarted, currentSong])
+}, [musicVolume, currentSong])
 
     const handleSongEnd = () =>{
         setCurrentSong(prev => getRandomSong(prev))

@@ -1,10 +1,12 @@
 import { useContext, useState, useRef, useEffect, } from 'react'
 import PageWrapper from '../../../WelcomeScreen/PageWrapper'
+import SoundSettingsWidget from '../../TutorialSettingsScreen'
 import bg from '../../../assets/background-collage.png'
 import thinking_image  from '../../../assets/black_man_thinking.webp'
-import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House} from 'lucide-react'
+import { ArrowRight, ArrowLeft, CornerDownLeft, CornerDownRight, House, Settings} from 'lucide-react'
 import { useNavigate } from "react-router-dom";
 import woodTapSound from '../../../assets/sound/woodTap.mp3'
+import tutorialSettingsScreen from '../../TutorialSettingsScreen'
 import { gsap } from 'gsap'
 
 //Lesson sound 
@@ -48,6 +50,7 @@ const thinking = "..."
     }
 }
 
+    const [isOpen, setIsOpen] = useState(false)
 //Navigation
 
 const navigate = useNavigate()
@@ -264,7 +267,7 @@ return(
         <ArrowLeft className=' left-3 size-8 cursor-pointer text-midGold' onClick={goBack} />
         <ArrowRight className=' size-8 text-gold-300 cursor-pointer text-midGold' onClick={goForward} />
         <House className=' size-7 text-gold-300 cursor-pointer text-midGold' onClick={() => {navigate('/selectionScreen')}}/>
-
+        <Settings size={22} className='size-7 text-gold-300 cursor-pointer text-midGold' onClick={() => {setIsOpen(!isOpen)}}/>
     </div>
 
 
@@ -362,8 +365,11 @@ return(
              </div>
 
         </div>
+
 </div>
-        
+        {isOpen&&(
+            <SoundSettingsWidget isOpen={isOpen} setIsOpen={setIsOpen}/>
+        )}
 
     </div>
 </PageWrapper>
